@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EL ANSARI الانصاري</title>
+    <!-- وصف الموقع الذي يظهر في نتائج البحث (قابل للتعديل) -->
+    <meta name="description" content="الانصاري للثوب العربي و جميع مشتملاتة تحت ادارة عصام بطران الانصاري" />
+    <!-- أيقونة الموقع (اللوجو الذي يظهر في تبويب المتصفح) -->
+    <link rel="icon" href="لوجو الانصاري مربع شفاف.png" type="image/x-icon" />  
+    <style>  
+      * {  
+        margin: 0;  
+        padding: 0;  
+        box-sizing: border-box;  
+        scroll-behavior: smooth;  
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;  
+        font-weight: 700;  
+      }  
+      body {  
+        background-color: #1A1A1A;  
+        color: #ffffff;  
+      }  
+
+      /* إضافة مسافة عند التمرير للروابط الداخلية */  
+      html {  
+        scroll-padding-top: 80px;  
+        scroll-behavior: smooth;  
+      }  
+
+      img {  
+        max-width: 100%;  
+        height: auto;  
+      }  
+
+      header {  
+        display: flex;  
+        justify-content: flex-end;  /* الأزرار على اليمين */
+        align-items: center;  
+        margin: 0 auto;  
+        max-width: 1200px;  
+        padding: 0 15px;  
+        flex-wrap: wrap;  
+        gap: 1rem;  
+      }  
+
+      .heroBtns {  
+        display: flex;  
+        gap: 1rem;  
+        margin-top: 1.5rem;  
+        flex-wrap: wrap;  
+        justify-content: flex-end;  
+      }  
+
+      .hireMe, .cv {  
+        background-color: rgba(255, 255, 255, 0.1);  
+        backdrop-filter: blur(10px);  
+        -webkit-backdrop-filter: blur(10px);  
+        border: 1px solid rgba(255, 255, 255, 0.3);  
+        color: #ffffff;  
+        border-radius: 24px;  
+        text-decoration: none;  
+        padding: 0.5rem 1.5rem;  
+        text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);  
+        white-space: nowrap;  
+        font-weight: 700;  
+        display: flex;  
+        align-items: center;  
+        gap: 0.5rem;  
+        transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;  
+      }  
+      .hireMe:active, .cv:active {  
+        transform: scale(1.1);  
+        background-color: rgba(255, 255, 255, 0.25);  
+        box-shadow: 0 6px 16px rgba(255, 255, 255, 0.3);  
+      }  
+
+      .aboutMeImg {  
+        width: 800px;  
+        max-width: 100%;  
+        height: auto;  
+        display: block;  
+        margin: 0 auto;  
+        border: none;  
+        outline: none;  
+      }  
+
+      .works {  
+        background-image: url("assets/svg/background.svg");  
+        padding: 0 10rem 10rem 10rem;  
+        margin: 0 0 5rem 0;  
+        background-size: cover;  
+        background-position: center;  
+      }  
+      .worksContainer {  
+        display: flex;  
+        flex-direction: column;  
+        justify-content: space-around;  
+        align-items: left;  
+        margin: 5rem auto;  
+        max-width: 1200px;  
+        padding: 0 15px;  
+      }  
+
+      .projectTitle {  
+        display: flex;  
+        align-items: center;  
+        justify-content: left;  
+        gap: 5px;  
+        font-size: 2rem;  
+        flex-wrap: wrap;  
+        color: #ffffff;  
+      }  
+
+      .works ul {  
+        display: flex;  
+        flex-wrap: wrap;  
+        gap: 30px;  
+        list-style-type: none;  
+        align-items: stretch;  
+        justify-content: center;  
+        padding: 0;  
+      }  
+
+      .works li {  
+        display: flex;  
+        flex-direction: column;  
+        width: 320px;  
+        list-style: none;  
+        overflow: visible;  
+      }  
+
+      .product-card {  
+        display: flex;  
+        flex-direction: column;  
+        align-items: center;  
+        text-align: center;  
+        background: rgba(255, 255, 255, 0.1);  
+        backdrop-filter: blur(10px);  
+        -webkit-backdrop-filter: blur(10px);  
+        border: 1px solid rgba(255, 255, 255, 0.3);  
+        border-radius: 25px;  
+        padding: 20px 15px;  
+        height: 100%;  
+        width: 100%;  
+        transition: transform 0.3s ease, box-shadow 0.3s ease;  
+        transform-origin: center center;  
+        overflow: visible;  
+        position: relative;  
+      }  
+
+      .product-card.zoomed {  
+        transform: scale(1.15);  
+        z-index: 1000;  
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);  
+      }  
+
+      .product-number {  
+        color: #ffffff;  
+        font-size: 1.2rem;  
+        margin-bottom: 0.5rem;  
+        width: 100%;  
+        text-align: center;  
+      }  
+
+      .product-description {  
+        color: #f0f0f0;  
+        font-size: 0.9rem;  
+        line-height: 1.5;  
+        margin: 0.5rem 0;  
+        width: 100%;  
+        word-wrap: break-word;  
+        text-align: center;  
+      }  
+
+      .buy-btn {  
+        display: inline-flex;  
+        align-items: center;  
+        justify-content: center;  
+        gap: 0.5rem;  
+        background: rgba(34, 139, 34, 0.8);  
+        backdrop-filter: blur(4px);  
+        -webkit-backdrop-filter: blur(4px);  
+        border: 1px solid rgba(255, 255, 255, 0.2);  
+        color: #fff;  
+        text-decoration: none;  
+        font-weight: bold;  
+        padding: 0.5rem 1.5rem;  
+        font-size: 1rem;  
+        border-radius: 30px;  
+        width: auto;  
+        min-width: 120px;  
+        text-align: center;  
+        transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;  
+        margin: 0.5rem 0;  
+      }  
+      .buy-btn:active {  
+        transform: scale(1.1);  
+        background: rgba(34, 139, 34, 1);  
+        box-shadow: 0 6px 14px rgba(34, 139, 34, 0.5);  
+      }  
+
+      /* حاوية الصورة داخل المنتج */  
+      .product-image-wrapper {  
+        position: relative;  
+        width: 100%;  
+        max-width: 280px;  
+        margin: 0 auto 0.5rem;  
+        overflow: hidden;  
+        border-radius: 20px;  
+      }  
+
+      .product-card img {  
+        width: 100%;  
+        border-radius: 20px;  
+        display: block;  
+        transition: transform 0.3s ease;  
+        transform-origin: center center;  
+      }  
+
+      /* زر التكبير الخاص بالمنتج */  
+      .product-zoom-btn {  
+        position: absolute;  
+        top: 8px;  
+        right: 8px;  
+        width: 36px;  
+        height: 36px;  
+        background-color: rgba(255, 255, 255, 0.2);  
+        backdrop-filter: blur(4px);  
+        border: 1px solid rgba(255, 255, 255, 0.4);  
+        border-radius: 50%;  
+        display: flex;  
+        align-items: center;  
+        justify-content: center;  
+        cursor: pointer;  
+        font-size: 18px;  
+        color: white;  
+        transition: background-color 0.2s ease, transform 0.2s ease;  
+        z-index: 15;  
+        user-select: none;  
+        box-shadow: 0 2px 8px rgba(0,0,0,0.3);  
+      }  
+
+      .product-zoom-btn:hover {  
+        background-color: rgba(255, 255, 255, 0.3);  
+        transform: scale(1.1);  
+      }  
+
+      /* مودال عرض الصورة المكبرة - نسخة سموز محسنة */  
+      .modal-overlay {  
+        visibility: hidden;  
+        opacity: 0;  
+        position: fixed;  
+        top: 0;  
+        left: 0;  
+        width: 100%;  
+        height: 100%;  
+        background-color: rgba(0, 0, 0, 0.8);  
+        backdrop-filter: blur(8px);  
+        z-index: 2000;  
+        display: flex;  
+        justify-content: center;  
+        align-items: center;  
+        transition: opacity 0.4s ease, visibility 0.4s ease;  
+      }  
+      .modal-overlay.show {  
+        visibility: visible;  
+        opacity: 1;  
+      }  
+      .modal-content {  
+        position: relative;  
+        max-width: 90vw;  
+        max-height: 90vh;  
+        transform: scale(0.9);  
+        transition: transform 0.4s ease;  
+      }  
+      .modal-overlay.show .modal-content {  
+        transform: scale(1);  
+      }  
+      .modal-content img {  
+        width: 500px;   /* تم التغيير من 600px إلى 500px لتصغير التكبير قليلاً */  
+        max-width: 90vw;  
+        height: auto;  
+        border-radius: 20px;  
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);  
+        transition: transform 0.4s ease;  
+      }  
+      .modal-close {  
+        position: absolute;  
+        top: -15px;  
+        right: -15px;  
+        width: 40px;  
+        height: 40px;  
+        background-color: rgba(255, 255, 255, 0.2);  
+        backdrop-filter: blur(4px);  
+        border: 1px solid rgba(255, 255, 255, 0.4);  
+        border-radius: 50%;  
+        display: flex;  
+        align-items: center;  
+        justify-content: center;  
+        cursor: pointer;  
+        font-size: 20px;  
+        color: white;  
+        transition: background-color 0.2s ease, transform 0.2s ease;  
+        z-index: 2010;  
+      }  
+      .modal-close:hover {  
+        background-color: rgba(255, 255, 255, 0.3);  
+        transform: scale(1.1);  
+      }  
+
+      .contactContainer {  
+        display: flex;  
+        flex-direction: column;  
+        align-items: center;  
+        justify-content: space-around;  
+        gap: 2rem;  
+        margin: 2rem auto;  
+        max-width: 1200px;  
+        padding: 0 15px;  
+      }  
+      .contactTitle {  
+        display: flex;  
+        align-items: center;  
+        justify-content: center;  
+        gap: 5px;  
+        margin-bottom: 10px;  
+        font-size: 2rem;  
+        flex-wrap: wrap;  
+        color: #ffffff;  
+      }  
+      .contactTitle h1 {  
+        font-size: 2.5rem;  
+      }  
+      .contact {  
+        display: flex;  
+        align-items: center;  
+        justify-content: center;  
+        margin-right: 5rem;  
+        gap: 20rem;  
+        flex-wrap: wrap;  
+      }  
+      .contact h3,  
+      .contact a {  
+        color: #ffffff;  
+        text-decoration: none;  
+      }  
+      .emailAndPhone {  
+        display: flex;  
+        align-items: center;  
+        justify-content: center;  
+        gap: 5px;  
+        flex-wrap: wrap;  
+      }  
+
+      .socialMedia {  
+        display: flex;  
+        align-items: center;  
+        justify-content: center;  
+        gap: 3rem;  
+        flex-wrap: wrap;  
+      }  
+      .socialMedia a {  
+        display: flex;  
+        align-items: center;  
+        justify-content: center;  
+        border-radius: 50px;  
+        background-color: rgba(255, 255, 255, 0.1);  
+        backdrop-filter: blur(4px);  
+        padding: 1rem;  
+        transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;  
+      }  
+      .socialMedia a:active {  
+        transform: scale(1.15);  
+        background-color: rgba(255, 255, 255, 0.25);  
+        box-shadow: 0 6px 14px rgba(255, 255, 255, 0.3);  
+      }  
+
+      .social-icon {  
+        width: 50px;  
+        height: auto;  
+        transition: transform 0.2s ease;  
+      }  
+
+      footer {  
+        color: #ffffff;  
+        padding: 2rem;  
+        text-align: center;  
+        font-size: 1.2rem;  
+      }  
+
+      /* إضافة مسافة علوية للعناصر المستهدفة بالروابط */  
+      #contactMe, #product1 {  
+        scroll-margin-top: 100px;  
+      }  
+
+      @media (max-width: 1023px) {  
+        header {  
+          margin-left: 1rem;  
+          margin-right: 1rem;  
+        }  
+        .heroImg {  
+          width: 400px;  
+          max-width: 100%;  
+        }  
+        .aboutMeImg {  
+          max-width: 600px;  
+        }  
+        .works {  
+          padding: 0 2rem 5rem 2rem;  
+        }  
+        .worksContainer {  
+          padding: 5rem 0rem;  
+          gap: 3rem;  
+        }  
+        .projectTitle {  
+          margin-left: 1rem;  
+        }  
+        .works ul {  
+          flex-direction: column;  
+          gap: 20px;  
+        }  
+        .works li {  
+          width: 100%;  
+          max-width: 380px;  
+        }  
+        .contactContainer {  
+          margin: 5rem 1rem;  
+          gap: 2rem;  
+        }  
+        .contact {  
+          flex-direction: column;  
+          gap: 2rem;  
+          margin-right: 0;  
+        }  
+        .contact > div {  
+          margin: 0;  
+        }  
+        .socialMedia {  
+          gap: 1.5rem;  
+        }  
+      }  
+
+      @media (max-width: 599px) {  
+        body {  
+          padding: 0;  
+        }  
+        header {  
+          flex-direction: column;  
+          gap: 0.5rem;  
+          margin-top: 0;  
+          text-align: center;  
+          justify-content: center;  
+          margin-left: 0;  
+          margin-right: 0;  
+          padding: 0 10px;  
+        }  
+        .heroBtns {  
+          justify-content: center;  
+          margin-top: 0.5rem;  
+        }  
+        .hireMe, .cv {  
+          white-space: normal;  
+          text-align: center;  
+        }  
+        .aboutMeImg {  
+          max-width: 100%;  
+          margin-top: 0;  
+        }  
+        .works {  
+          padding: 0 10px 3rem 10px;  
+        }  
+        .worksContainer {  
+          align-items: center;  
+          padding: 2rem 0;  
+        }  
+        .projectTitle {  
+          justify-content: center;  
+          margin-left: 0;  
+        }  
+        .works ul {  
+          flex-direction: row;  
+          flex-wrap: wrap;  
+          justify-content: center;  
+          gap: 15px;  
+        }  
+        .works li {  
+          width: calc(50% - 15px);  
+          max-width: none;  
+          margin: 0;  
+        }  
+        .product-image-wrapper {  
+          max-width: 100%;  
+        }  
+        .product-description {  
+          font-size: 0.8rem;  
+        }  
+        .buy-btn {  
+          padding: 0.3rem 0.8rem;  
+          font-size: 0.9rem;  
+          min-width: auto;  
+          width: 100%;  
+        }  
+        .product-number {  
+          font-size: 1rem;  
+        }  
+        .contact {  
+          gap: 1.5rem;  
+          text-align: center;  
+          margin-right: 0;  
+        }  
+        .emailAndPhone {  
+          flex-direction: column;  
+        }  
+        .socialMedia {  
+          gap: 1rem;  
+        }  
+        footer {  
+          text-align: center;  
+          font-size: 1rem;  
+          padding: 1rem;  
+        }  
+      }  
+
+      @media (max-width: 1023px) and (orientation: landscape) {  
+        .heroBtns {  
+          display: flex !important;  
+          flex-wrap: wrap;  
+          justify-content: center;  
+          gap: 1rem;  
+        }  
+        .hireMe, .cv {  
+          display: flex !important;  
+        }  
+      }  
+    </style>  
+  </head>  
+  <body>  
+    <header>  
+      <div class="heroBtns">  
+        <a class="hireMe" href="#contactMe">للتواصل</a>  
+        <a class="cv" href="#product1" style="text-decoration:none;">لشراء الثوب  
+          <im src="download.svg" alt="شراء الثوب" />  
+        </a>  
+      </div>  
+    </header>  
+
+    <img src="LoGo.png"  
+         alt="aboutMe image"  
+         class="aboutMeImg"  
+    />  
+
+    <section class="works" id="MyWorks">  
+      <div class="worksContainer">  
+        <ul style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;">  
+          <!-- المنتج 1 -->  
+          <li>  
+            <div class="product-card">  
+              <div class="product-number">رقم الثوب: 1</div>  
+              <div class="product-image-wrapper">  
+                <img src="WhatsApp Image 2026-03-08 at 6.50.57 AM.jpeg" alt="landing Page" class="product-img" id="product1">  
+                <div class="product-zoom-btn" onclick="openProductModal(this)">⤢</div>  
+              </div>  
+              <div class="product-description">ثوب ابيض نص لياقة بأزرار ذهبية في اللياقة و الاسورة</div>  
+              <a href="الفورم.html" target="_blank" class="buy-btn">اشتري الآن 800ج</a>  <!-- تم التعديل: 700ج -> 800ج -->
+            </div>  
+          </li>  
+          <!-- المنتج 2 -->  
+          <li>  
+            <div class="product-card">  
+              <div class="product-number">رقم الثوب: 2</div>  
+              <div class="product-image-wrapper">  
+                <img src="WhatsApp Image 2026-03-08 at 6.50.58 AM.jpeg" alt="landing Page" class="product-img">  
+                <div class="product-zoom-btn" onclick="openProductModal(this)">⤢</div>  
+              </div>  
+              <div class="product-description">ثوب اسود نص لياقة بأزرار ذهبية في اللياقة و الاسورة</div>  
+              <a href="الفورم.html" target="_blank" class="buy-btn">اشتري الآن 800ج</a>  <!-- تم التعديل: 700ج -> 800ج -->
+            </div>  
+          </li>  
+          <!-- المنتج 3 -->  
+          <li>  
+            <div class="product-card">  
+              <div class="product-number">رقم الثوب: 3</div>  
+              <div class="product-image-wrapper">  
+                <img src="WhatsApp Image 2026-03-08 at 6.50.59 AM.jpeg" alt="landing Page" class="product-img">  
+                <div class="product-zoom-btn" onclick="openProductModal(this)">⤢</div>  
+              </div>  
+              <div class="product-description">ثوب بوني نص لياقة بأزرار ذهبية في اللياقة و الاسورة</div>  
+              <a href="الفورم.html" target="_blank" class="buy-btn">اشتري الآن 800ج</a>  <!-- تم التعديل: 700ج -> 800ج -->
+            </div>  
+          </li>  
+          <!-- المنتج 4 -->  
+          <li>  
+            <div class="product-card">  
+              <div class="product-number">رقم الثوب: 4</div>  
+              <div class="product-image-wrapper">  
+                <img src="WhatsApp Image 2026-03-08 at 6.50.59 AM (1).jpeg" alt="landing Page" class="product-img">  
+                <div class="product-zoom-btn" onclick="openProductModal(this)">⤢</div>  
+              </div>  
+              <div class="product-description">ثوب رصاصي نص لياقة بأزرار ذهبية في اللياقة و الاسورة</div>  
+              <a href="الفورم.html" target="_blank" class="buy-btn">اشتري الآن 800ج</a>  <!-- تم التعديل: 700ج -> 800ج -->
+            </div>  
+          </li>  
+          <!-- المنتج 5 -->  
+          <li>  
+            <div class="product-card">  
+              <div class="product-number">رقم الثوب: 5</div>  
+              <div class="product-image-wrapper">  
+                <img src="WhatsApp Image 2026-03-07 at 5.29.10 AM (3).jpeg" alt="landing Page" class="product-img">  
+                <div class="product-zoom-btn" onclick="openProductModal(this)">⤢</div>  
+              </div>  
+              <div class="product-description">ثوب ابيض لياقة كاملة سادة</div>  
+              <a href="الفورم.html" target="_blank" class="buy-btn">اشتري الآن 800ج</a>  <!-- تم التعديل: 700ج -> 800ج -->
+            </div>  
+          </li>  
+          <!-- المنتج 6 -->  
+          <li>  
+            <div class="product-card">  
+              <div class="product-number">رقم الثوب: 6</div>  
+              <div class="product-image-wrapper">  
+                <img src="WhatsApp Image 2026-03-09 at 5.56.38 AM.jpeg" alt="landing Page" class="product-img">  
+                <div class="product-zoom-btn" onclick="openProductModal(this)">⤢</div>  
+              </div>  
+              <div class="product-description">ثوب اسود لياقة كاملة سادة</div>  
+              <a href="الفورم.html" target="_blank" class="buy-btn">اشتري الآن 800ج</a>  <!-- تم التعديل: 700ج -> 800ج -->
+            </div>  
+          </li>  
+          <!-- المنتج 7 -->  
+          <li>  
+            <div class="product-card">  
+              <div class="product-number">رقم الثوب: 7</div>  
+              <div class="product-image-wrapper">  
+                <img src="WhatsApp Image 2026-03-09 at 6.00.30 AM.jpeg" alt="landing Page" class="product-img">  
+                <div class="product-zoom-btn" onclick="openProductModal(this)">⤢</div>  
+              </div>  
+              <div class="product-description">ثوب ازرق لياقة كاملة سادة</div>  
+              <a href="الفورم.html" target="_blank" class="buy-btn">اشتري الآن 800ج</a>  <!-- تم التعديل: 700ج -> 800ج -->
+            </div>  
+          </li>  
+          <!-- المنتج 8 -->  
+          <li>  
+            <div class="product-card">  
+              <div class="product-number">رقم الثوب: 8</div>  
+              <div class="product-image-wrapper">  
+                <img src="WhatsApp Image 2026-03-09 at 6.03.55 AM.jpeg" alt="landing Page" class="product-img">  
+                <div class="product-zoom-btn" onclick="openProductModal(this)">⤢</div>  
+              </div>  
+              <div class="product-description">ثوب اخضر غامق لياقة كاملة سادة</div>  
+              <a href="الفورم.html" target="_blank" class="buy-btn">اشتري الآن 800ج</a>  <!-- تم التعديل: 700ج -> 800ج -->
+            </div>  
+          </li>  
+          <!-- المنتج 9 -->  
+          <li>  
+            <div class="product-card">  
+              <div class="product-number">رقم الثوب: 9</div>  
+              <div class="product-image-wrapper">  
+                <img src="WhatsApp Image 2026-03-07 at 5.29.10 AM (4).jpeg" alt="landing Page" class="product-img">  
+                <div class="product-zoom-btn" onclick="openProductModal(this)">⤢</div>  
+              </div>  
+              <div class="product-description">ثوب بني لياقة كاملة سادة</div>  
+              <a href="الفورم.html" target="_blank" class="buy-btn">اشتري الآن 800ج</a>  <!-- تم التعديل: 700ج -> 800ج -->
+            </div>  
+          </li>  
+          <!-- المنتج 10 -->  
+          <li>  
+            <div class="product-card">  
+              <div class="product-number">رقم الثوب: 10</div>  
+              <div class="product-image-wrapper">  
+                <img src="WhatsApp Image 2026-03-09 at 6.20.11 AM.jpeg" alt="landing Page" class="product-img">  
+                <div class="product-zoom-btn" onclick="openProductModal(this)">⤢</div>  
+              </div>  
+              <div class="product-description">ثوب لبني لياقة كاملة سادة</div>  
+              <a href="الفورم.html" target="_blank" class="buy-btn">اشتري الآن 800ج</a>  <!-- تم التعديل: 700ج -> 800ج -->
+            </div>  
+          </li>  
+          <!-- المنتج 11 -->  
+          <li>  
+            <div class="product-card">  
+              <div class="product-number">رقم الثوب: 11</div>  
+              <div class="product-image-wrapper">  
+                <img src="WhatsApp Image 2026-03-09 at 6.21.14 AM.jpeg" alt="landing Page" class="product-img">  
+                <div class="product-zoom-btn" onclick="openProductModal(this)">⤢</div>  
+              </div>  
+              <div class="product-description">ثوب جملي فاتح لياقة كاملة سادة</div>  
+              <a href="الفورم.html" target="_blank" class="buy-btn">اشتري الآن 800ج</a>  <!-- تم التعديل: 700ج -> 800ج -->
+            </div>  
+          </li>  
+          <!-- المنتج 12 -->  
+          <li>  
+            <div class="product-card">  
+              <div class="product-number">رقم الثوب: 12</div>  
+              <div class="product-image-wrapper">  
+                <img src="WhatsApp Image 2026-03-07 at 5.29.08 AM (2).jpeg" alt="landing Page" class="product-img">  
+                <div class="product-zoom-btn" onclick="openProductModal(this)">⤢</div>  
+              </div>  
+              <div class="product-description">ثوب ابيض نص لياقة بأزرار ذهبية بالكامل </div>  
+              <a href="الفورم.html" target="_blank" class="buy-btn">اشتري الآن 800ج</a>  <!-- تم التعديل: 700ج -> 800ج -->
+            </div>  
+          </li>  
+          <!-- المنتج 13 -->  
+          <li>  
+            <div class="product-card">  
+              <div class="product-number">رقم الثوب: 13</div>  
+              <div class="product-image-wrapper">  
+                <img src="WhatsApp Image 2026-03-07 at 5.29.08 AM (1).jpeg" alt="landing Page" class="product-img">  
+                <div class="product-zoom-btn" onclick="openProductModal(this)">⤢</div>  
+              </div>  
+              <div class="product-description">ثوب اسود نص لياقة بأزرار ذهبية بالكامل </div>  
+              <a href="الفورم.html" target="_blank" class="buy-btn">اشتري الآن 800ج</a>  <!-- تم التعديل: 700ج -> 800ج -->
+            </div>  
+          </li>  
+          <!-- المنتج 14 -->  
+          <li>  
+            <div class="product-card">  
+              <div class="product-number">رقم الثوب: 14</div>  
+              <div class="product-image-wrapper">  
+                <img src="WhatsApp Image 2026-03-07 at 5.29.08 AM.jpeg" alt="landing Page" class="product-img">  
+                <div class="product-zoom-btn" onclick="openProductModal(this)">⤢</div>  
+              </div>  
+              <div class="product-description">ثوب بني نص لياقة بأزرار ذهبية بالكامل </div>  
+              <a href="الفورم.html" target="_blank" class="buy-btn">اشتري الآن 800ج</a>  <!-- تم التعديل: 700ج -> 800ج -->
+            </div>  
+          </li>  
+          <!-- المنتج 15 -->  
+          <li>  
+            <div class="product-card">  
+              <div class="product-number">رقم الثوب: 15</div>  
+              <div class="product-image-wrapper">  
+                <img src="WhatsApp Image 2026-03-07 at 5.29.08 AM (3).jpeg" alt="landing Page" class="product-img">  
+                <div class="product-zoom-btn" onclick="openProductModal(this)">⤢</div>  
+              </div>  
+              <div class="product-description">ثوب رصاصي نص لياقة بأزرار ذهبية بالكامل </div>  
+              <a href="الفورم.html" target="_blank" class="buy-btn">اشتري الآن 800ج</a>  <!-- تم التعديل: 700ج -> 800ج -->
+            </div>  
+          </li>  
+          <!-- المنتج 16 -->  
+          <li>  
+            <div class="product-card">  
+              <div class="product-number">رقم الثوب: 16</div>  
+              <div class="product-image-wrapper">  
+                <img src="WhatsApp Image 2026-03-08 at 7.11.52 AM.jpeg" alt="landing Page" class="product-img">  
+                <div class="product-zoom-btn" onclick="openProductModal(this)">⤢</div>  
+              </div>  
+              <div class="product-description">ثوب ابيض لياقة كاملة بأزرار ذهبية بالكامل</div>  
+              <a href="الفورم.html" target="_blank" class="buy-btn">اشتري الآن 1000ج</a>  <!-- تم التعديل: 900ج -> 1000ج -->
+            </div>  
+          </li>  
+          <!-- المنتج 17 -->  
+          <li>  
+            <div class="product-card">  
+              <div class="product-number">رقم الثوب: 17</div>  
+              <div class="product-image-wrapper">  
+                <img src="WhatsApp Image 2026-03-07 at 5.29.10 AM.jpeg" alt="landing Page" class="product-img">  
+                <div class="product-zoom-btn" onclick="openProductModal(this)">⤢</div>  
+              </div>  
+              <div class="product-description">ثوب اسود  لياقة كاملة بأزرار ذهبية بالكامل </div>  
+              <a href="الفورم.html" target="_blank" class="buy-btn">اشتري الآن 1000ج</a>  <!-- تم التعديل: 900ج -> 1000ج -->
+            </div>  
+          </li>  
+          <!-- المنتج 18 -->  
+          <li>  
+            <div class="product-card">  
+              <div class="product-number">رقم الثوب: 18</div>  
+              <div class="product-image-wrapper">  
+                <img src="WhatsApp Image 2026-03-07 at 5.29.09 AM.jpeg" alt="landing Page" class="product-img">  
+                <div class="product-zoom-btn" onclick="openProductModal(this)">⤢</div>  
+              </div>  
+              <div class="product-description">ثوب رصاصي لياقة كاملة بأزرار ذهبية بالكامل</div>  
+              <a href="الفورم.html" target="_blank" class="buy-btn">اشتري الآن 1000ج</a>  <!-- تم التعديل: 900ج -> 1000ج -->
+            </div>  
+          </li>  
+          <!-- المنتج 19 -->  
+          <li>  
+            <div class="product-card">  
+              <div class="product-number">رقم الثوب: 19</div>  
+              <div class="product-image-wrapper">  
+                <img src="WhatsApp Image 2026-03-07 at 5.29.09 AM (1).jpeg" alt="landing Page" class="product-img">  
+                <div class="product-zoom-btn" onclick="openProductModal(this)">⤢</div>  
+              </div>  
+              <div class="product-description">ثوب ازرق غامق لياقة كاملة بأزرار ذهبية بالكامل</div>  
+              <a href="الفورم.html" target="_blank" class="buy-btn">اشتري الآن 1000ج</a>  <!-- تم التعديل: 900ج -> 1000ج -->
+            </div>  
+          </li>  
+          <!-- المنتج 20 -->  
+          <li>  
+            <div class="product-card">  
+              <div class="product-number">رقم الثوب: 20</div>  
+              <div class="product-image-wrapper">  
+                <img src="WhatsApp Image 2026-03-08 at 7.22.37 AM.jpeg" alt="landing Page" class="product-img">  
+                <div class="product-zoom-btn" onclick="openProductModal(this)">⤢</div>  
+              </div>  
+              <div class="product-description">ثوب مغربي ابيض</div>  
+              <a href="الفورم.html" target="_blank" class="buy-btn">اشتري الآن 1100ج</a>  <!-- تم التعديل: 1000ج -> 1100ج -->
+            </div>  
+          </li>  
+          <!-- المنتج 21 -->  
+          <li>  
+            <div class="product-card">  
+              <div class="product-number">رقم الثوب: 21</div>  
+              <div class="product-image-wrapper">  
+                <img src="WhatsApp Image 2026-03-08 at 7.22.37 AM (1).jpeg" alt="landing Page" class="product-img">  
+                <div class="product-zoom-btn" onclick="openProductModal(this)">⤢</div>  
+              </div>  
+              <div class="product-description">ثوب مغربي اسود</div>  
+              <a href="الفورم.html" target="_blank" class="buy-btn">اشتري الآن 1100ج</a>  <!-- تم التعديل: 1000ج -> 1100ج -->
+            </div>  
+          </li>  
+          <!-- المنتج 22 -->  
+          <li>  
+            <div class="product-card">  
+              <div class="product-number">رقم الثوب: 22</div>  
+              <div class="product-image-wrapper">  
+                <img src="WhatsApp Image 2026-03-08 at 7.22.37 AM (3).jpeg" alt="landing Page" class="product-img">  
+                <div class="product-zoom-btn" onclick="openProductModal(this)">⤢</div>  
+              </div>  
+              <div class="product-description">ثوب مغربي رصاصي</div>  
+              <a href="الفورم.html" target="_blank" class="buy-btn">اشتري الآن 1100ج</a>  <!-- تم التعديل: 1000ج -> 1100ج -->
+            </div>  
+          </li>  
+          <!-- المنتج 23 -->  
+          <li>  
+            <div class="product-card">  
+              <div class="product-number">رقم الثوب: 23</div>  
+              <div class="product-image-wrapper">  
+                <img src="WhatsApp Image 2026-03-08 at 7.22.38 AM.jpeg" alt="landing Page" class="product-img">  
+                <div class="product-zoom-btn" onclick="openProductModal(this)">⤢</div>  
+              </div>  
+              <div class="product-description">ثوب مغربي ازرق غامق</div>  
+              <a href="الفورم.html" target="_blank" class="buy-btn">اشتري الآن 1100ج</a>  <!-- تم التعديل: 1000ج -> 1100ج -->
+            </div>  
+          </li>  
+          <!-- المنتج 24 -->  
+          <li>  
+            <div class="product-card">  
+              <div class="product-number">رقم الثوب: 24</div>  
+              <div class="product-image-wrapper">  
+                <img src="WhatsApp Image 2026-03-10 at 7.52.22 AM (1).jpeg" alt="landing Page" class="product-img">  
+                <div class="product-zoom-btn" onclick="openProductModal(this)">⤢</div>  
+              </div>  
+              <div class="product-description">فنيلة نص كم بجميع الالوان</div> 
+              <a href="الفورم.html" target="_blank" class="buy-btn">اشتري الآن 100ج</a>  <!-- تم التعديل: 700ج -> 800ج -->
+            </div>  
+          </li>  
+          <!-- المنتج 25 -->  
+          <li>  
+            <div class="product-card">  
+              <div class="product-number">رقم الثوب: 25</div>  
+              <div class="product-image-wrapper">  
+                <img src="WhatsApp Image 2026-03-10 at 7.52.22 AM.jpeg" alt="landing Page" class="product-img">  
+                <div class="product-zoom-btn" onclick="openProductModal(this)">⤢</div>  
+              </div>  
+              <div class="product-description">فنيلة حمالة بجميع الالوان</div>  
+              <a href="الفورم.html" target="_blank" class="buy-btn">اشتري الآن 100ج</a>  <!-- تم التعديل: 700ج -> 800ج -->
+            </div>  
+          </li>  
+          <!-- المنتج 26 -->  
+          <li>  
+            <div class="product-card">  
+              <div class="product-number">رقم الثوب: 003</div>  
+              <div class="product-image-wrapper">  
+                <img src="WhatsApp Image 2026-03-08 at 7.26.38 AM (2).jpeg" alt="landing Page" class="product-img">  
+                <div class="product-zoom-btn" onclick="openProductModal(this)">⤢</div>  
+              </div>  
+              <div class="product-description">سروال للثوب بجميع الالوان</div>  
+              <a href="الفورم.html" target="_blank" class="buy-btn">اشتري الآن 800ج</a>  <!-- تم التعديل: 700ج -> 800ج -->
+            </div>  
+          </li>  
+          <!-- نهاية المنتجات -->
+        </ul>  
+      </div>  
+    </section>  
+
+    <section class="contactContainer" id="contactMe">  
+      <div class="contactTitle">  
+        <h3 class="aboutName"></h3>  
+        <h4 class="aboutTitle">للتواصل/ عصام البطران</h4>  
+      </div>  
+
+      <div class="contact">  
+        <div class="emailAndPhone">  
+          <img src="Email.svg" alt="email logo" />  
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=elansarialansary@gmail.com" target="_blank">elansarialansary@gmail.com</a>  
+        </div>  
+        <div class="emailAndPhone">  
+          <img src="phone.svg" alt="phone logo" />  
+          <h3>+201061720462</h3>  
+        </div>  
+      </div>  
+      <div class="socialMedia">  
+        <a href="https://wa.me/201061720462" target="_blank"><img src="images (12).jpeg" alt="whatsapp" class="social-icon" /></a>  
+        <a href="https://www.facebook.com/share/1KJqECsoCS/" target="_blank"><img src="Picsart_26-03-07_18-08-14-878.png" alt="x" class="social-icon" /></a>  
+        <a href="https://www.tiktok.com/@el.ansari.212?_r=1&_t=ZS-94UbGBLrOiu" target="_blank"><img src="Picsart_26-03-07_18-04-25-169.png" alt="tiktok" class="social-icon" /></a>  
+      </div>  
+    </section>  
+    <hr />  
+    <footer>  
+      <p>ادارة/ عصام البطران</p>  
+    </footer>  
+
+    <!-- مودال عرض الصورة المكبرة -->  
+    <div class="modal-overlay" id="imageModal" onclick="closeModal()">  
+      <div class="modal-content" onclick="event.stopPropagation()">  
+        <img src="" alt="صورة مكبرة" id="modalImage">  
+        <div class="modal-close" onclick="closeModal()">✕</div>  
+      </div>  
+    </div>  
+
+    <script>  
+      // دالة فتح المودال مع الصورة المحددة  
+      function openProductModal(btn) {  
+        const wrapper = btn.closest('.product-image-wrapper');  
+        const img = wrapper.querySelector('.product-img');  
+        const modal = document.getElementById('imageModal');  
+        const modalImg = document.getElementById('modalImage');  
+        modalImg.src = img.src;  
+        modal.classList.add('show');  
+      }  
+
+      // دالة إغلاق المودال  
+      function closeModal() {  
+        const modal = document.getElementById('imageModal');  
+        modal.classList.remove('show');  
+      }  
+
+      // تحسين سلوك النقر على الروابط لضمان المسافة المطلوبة  
+      document.addEventListener('DOMContentLoaded', function() {  
+        const contactSection = document.getElementById('contactMe');  
+        const firstProduct = document.getElementById('product1');  
+
+        if (contactSection) {  
+          contactSection.style.scrollMarginTop = '100px';  
+        }  
+        if (firstProduct) {  
+          firstProduct.style.scrollMarginTop = '100px';  
+        }  
+      });  
+    </script>  
+  </body>  
+</html>

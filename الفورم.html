@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تأكيد الطلب المتكامل</title>
+    <style>
+        /* الثيم الموحد مع أنيميشن كامل لجميع العناصر */
+        body{
+            font-family: Arial, sans-serif;
+            background: linear-gradient(145deg, #0d0d0d, #1a1a1a);
+            color:#fff;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            min-height:100vh;
+            margin:0;
+            padding:10px 0;
+        }
+        .container{
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding:3px 25px 5px 25px;
+            border-radius:20px;
+            width:270px;
+            box-shadow:0 0 25px rgba(0,0,0,0.5);
+            border:1px solid rgba(255,255,255,0.15);
+            transition: transform 0.3s ease;
+        }
+        .container:hover{ transform: scale(1.02); }
+        h2{ 
+            text-align:center; 
+            margin-top: 0px;
+            margin-bottom:5px; 
+            font-size:17px;
+            color:#fff; 
+            font-weight: bold;
+        }
+
+        /* شبكة الحقول الأساسية (8 حقول) */
+        .form-grid{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px 8px;
+            margin-bottom: 2px;
+        }
+        /* تصميم موحد لجميع حقول الإدخال مع أنيميشن */
+        .form-grid input,
+        .form-grid textarea,
+        .sizes-grid input {
+            width:100%;
+            padding:5px 8px;
+            margin:0;
+            border:none;
+            border-radius:8px;
+            background: rgba(255,255,255,0.1);
+            color:#fff;
+            font-size:14px;
+            font-weight:500;
+            letter-spacing:0.5px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            direction: rtl;
+            text-align: right;
+            height: 30px;
+            resize: none;
+            line-height: 1.4;
+            overflow: hidden;
+        }
+
+        /* استثناء لحقل "رقم الثوب" */
+        input[name="form_number"] {
+            font-size: 14px;
+            letter-spacing: normal;
+            padding: 2px 8px;
+            line-height: 1.6;
+        }
+
+        /* استثناء لباقي الحقول الطويلة */
+        input[name="biceps_circumference"],
+        textarea[name="details"] {
+            font-size: 12px;
+            letter-spacing: normal;
+        }
+
+        /* تأثير focus الموحد */
+        .form-grid input:focus,
+        .form-grid textarea:focus,
+        .sizes-grid input:focus {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            outline: none;
+            height: 30px;
+        }
+
+        /* إخفاء أزرار السبين للأرقام */
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type=number] { -moz-appearance: textfield; }
+
+        /* الصورة */
+        .model-preview{
+            display:block;
+            margin:0 auto 4px auto;
+            border-radius:12px;
+            border:1px solid rgba(255,255,255,0.3);
+            transition: transform 0.2s ease, box-shadow 0.4s ease;
+            cursor: pointer;
+            max-width:100%;
+            height:auto;
+            will-change: transform;
+            transform-origin: bottom center;
+        }
+        .model-preview:active{
+            transform: scale(1.05);
+            box-shadow:0 0 25px rgba(255,255,255,0.5);
+        }
+
+        /* تنسيقات شريط التكبير */
+        .zoom-control {
+            margin: 2px 0 14px 0;
+            text-align: center;
+            direction: rtl;
+            min-height: 22px;
+        }
+        .zoom-label {
+            display: block;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 3px;
+            color: #fff;
+            opacity: 1;
+            transition: opacity 0.15s ease;
+            pointer-events: none;
+        }
+        .zoom-label.hidden {
+            opacity: 0;
+        }
+
+        /* شريط التمرير المخصص */
+        .custom-slider {
+            position: relative;
+            width: 100%;
+            height: 5px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            cursor: pointer;
+            direction: ltr;
+            margin-top: 0px;
+        }
+
+        /* كرة السحب */
+        .slider-thumb {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: #fff;
+            border-radius: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 8px rgba(255,255,255,0.5);
+            transition: all 0.2s ease;
+            cursor: pointer;
+            will-change: transform;
+        }
+
+        .slider-thumb:hover {
+            transform: translate(-50%, -50%) scale(1.15);
+            background: #28a745;
+            box-shadow: 0 0 15px rgba(40, 167, 69, 0.5);
+        }
+
+        .slider-thumb:active,
+        .slider-thumb.dragging {
+            transform: translate(-50%, -50%) scale(1.1);
+            background: #1e7e34;
+            box-shadow: 0 0 20px rgba(255,255,255,0.8), 0 0 40px rgba(40, 167, 69, 0.6);
+        }
+
+        .sizes-title{ 
+            margin-top: 8px;
+            margin-bottom: 1px; 
+            font-size:14px; 
+            font-weight:bold; 
+            text-align:center; 
+        }
+        
+        /* شبكة المقاسات */
+        .sizes-grid{ 
+            display:grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 6px 8px;
+            margin-top: 0px;
+            margin-bottom: 6px;
+        }
+
+        .buttons{ display:flex; justify-content:space-between; margin-top: 2px; }
+        button{
+            width:48%; 
+            padding:6px 12px;
+            border:none; 
+            border-radius:10px;
+            cursor:pointer; 
+            font-size:15px;
+            font-weight:bold; 
+            transition: all 0.3s ease;
+        }
+        button:hover{ transform: scale(1.08); box-shadow:0 0 15px rgba(255,255,255,0.3); }
+        .confirm{ background:#28a745; color:#fff; }
+        .cancel{ background:#dc3545; color:#fff; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>بيانات الطلب</h2>
+        <form id="orderForm">
+            <!-- شبكة الحقول الأساسية (8 حقول) -->
+            <div class="form-grid">
+                <!-- العمود الأيمن -->
+                <input type="text" name="country" placeholder="الدولة" required>
+                <input type="text" name="name" placeholder="الاسم" required>
+
+                <input type="number" name="quantity" placeholder="كم ثوب" required min="1">
+                <input type="text" name="governorate" placeholder="المحافظة" required>
+
+                <input type="tel" name="phone" placeholder="رقم هاتف آخر" required>
+                <textarea name="details" placeholder="تفاصيل العنوان"></textarea>
+
+                <!-- تم تغيير placeholder إلى "رقم الثوب" -->
+                <input type="text" name="form_number" placeholder="رقم الثوب" required>
+                <input type="tel" name="alternate_phone" placeholder="رقم الهاتف">
+            </div>
+
+            <div class="sizes-title">(سم) طريقة القياس</div>
+            <img src="WhatsApp Image 2026-03-04 at 12.46.55 PM.jpeg" class="model-preview" id="measureImage" alt="طريقة القياس">
+
+            <!-- عنصر التحكم بالتكبير -->
+            <div class="zoom-control">
+                <span class="zoom-label" id="zoomLabel">تكبير الصور 🔍</span>
+                <div class="custom-slider" id="customSlider">
+                    <div class="slider-thumb" id="sliderThumb"></div>
+                </div>
+            </div>
+
+            <!-- شبكة المقاسات (6 حقول) -->
+            <div class="sizes-grid">
+                <!-- العمود الأيمن -->
+                <input type="number" name="shoulder_width" placeholder="عرض الكتف">
+                <input type="number" name="length_cm" placeholder="الطول">
+
+                <input type="number" name="neck_circumference" placeholder="محيط الرقبة">
+                <input type="number" name="arm_length" placeholder="طول الذراع">
+
+                <input type="number" name="biceps_circumference" placeholder="محيط البايسبس">
+                <input type="number" name="width" placeholder="العرض">
+            </div>
+
+            <input type="hidden" name="model_image" value="diagram-clean.png">
+
+            <div class="buttons">
+                <button type="button" class="cancel" id="cancelBtn">إلغاء الطلب</button>
+                <button type="submit" class="confirm">تأكيد الطلب</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const img = document.getElementById("measureImage");
+        const slider = document.getElementById("customSlider");
+        const thumb = document.getElementById("sliderThumb");
+        const zoomLabel = document.getElementById("zoomLabel");
+
+        let isDragging = false;
+        const minZoom = 1;
+        const maxZoom = 1.7;  // تم التعديل: من 1.6 إلى 1.7 (تكبير قليل)
+
+        function setZoomFromEvent(clientX) {
+            const rect = slider.getBoundingClientRect();
+            let x = clientX - rect.left;
+            x = Math.max(0, Math.min(x, rect.width));
+            const percentage = x / rect.width;
+            const zoomValue = minZoom + (maxZoom - minZoom) * percentage;
+            thumb.style.left = percentage * 100 + "%";
+            img.style.transform = `scale(${zoomValue})`;
+
+            if (percentage >= 0.99) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function startDrag(e, clientX) {
+            isDragging = true;
+            setZoomFromEvent(clientX);
+            e.preventDefault();
+            thumb.classList.add('dragging');
+            img.style.transition = 'none';
+            thumb.style.transition = 'none';
+            // إخفاء كلمة "تكبير الصور" عند السحب
+            zoomLabel.classList.add('hidden');
+        }
+
+        function stopDrag() {
+            if (isDragging) {
+                isDragging = false;
+                thumb.classList.remove('dragging');
+                img.style.transition = '';
+                thumb.style.transition = '';
+                // إظهار كلمة "تكبير الصور" عند الإفلات
+                zoomLabel.classList.remove('hidden');
+            }
+        }
+
+        slider.addEventListener("mousedown", (e) => startDrag(e, e.clientX));
+        thumb.addEventListener("mousedown", (e) => startDrag(e, e.clientX));
+
+        window.addEventListener("mousemove", (e) => {
+            if (!isDragging) return;
+            setZoomFromEvent(e.clientX);
+            e.preventDefault();
+        });
+
+        window.addEventListener("mouseup", stopDrag);
+
+        slider.addEventListener("touchstart", (e) => {
+            e.preventDefault();
+            startDrag(e, e.touches[0].clientX);
+        }, { passive: false });
+
+        thumb.addEventListener("touchstart", (e) => {
+            e.preventDefault();
+            startDrag(e, e.touches[0].clientX);
+        }, { passive: false });
+
+        window.addEventListener("touchmove", (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+            setZoomFromEvent(e.touches[0].clientX);
+        }, { passive: false });
+
+        window.addEventListener("touchend", stopDrag);
+        window.addEventListener("touchcancel", stopDrag);
+
+        thumb.style.left = "0%";
+        img.style.transform = "scale(1)";
+
+        document.getElementById("orderForm").addEventListener("submit", function(event){
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            let body = "تفاصيل الطلب:\n\n" +
+                "الاسم: " + formData.get("name") + "\n" +
+                "الدولة: " + formData.get("country") + "\n" +
+                "المحافظة: " + formData.get("governorate") + "\n" +
+                "كم ثوب: " + formData.get("quantity") + "\n" +
+                "تفاصيل العنوان: " + formData.get("details") + "\n" +
+                "رقم هاتف آخر: " + formData.get("phone") + "\n" +
+                "رقم الهاتف: " + formData.get("alternate_phone") + "\n" +
+                "رقم الثوب: " + formData.get("form_number") + "\n" +
+                "عرض الكتف: " + formData.get("shoulder_width") + "\n" +
+                "محيط الرقبة: " + formData.get("neck_circumference") + "\n" +
+                "محيط البايسبس: " + formData.get("biceps_circumference") + "\n" +
+                "الطول: " + formData.get("length_cm") + "\n" +
+                "طول الذراع: " + formData.get("arm_length") + "\n" +
+                "العرض: " + formData.get("width");
+
+            let encodedMessage = encodeURIComponent(body);
+            let userAgent = navigator.userAgent.toLowerCase();
+
+            let link;
+            if (userAgent.includes("windows") || userAgent.includes("mac")) {
+                link = "https://mail.google.com/mail/?view=cm&fs=1&to=" 
+                    + encodeURIComponent("elansarialansary@gmail.com") 
+                    + "&su=" + encodeURIComponent("طلب جديد من الموقع") 
+                    + "&body=" + encodedMessage;
+            } else {
+                link = "https://wa.me/201061720462?text=" + encodedMessage;
+            }
+
+            window.open(link, "_blank", "width=800,height=600");
+            setTimeout(() => { window.close(); }, 1500);
+        });
+
+        document.getElementById("cancelBtn").addEventListener("click", function(){
+            window.close();
+        });
+    </script>
+</body>
+</html>

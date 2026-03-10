@@ -1,0 +1,31 @@
+/* إزالة المسافة بين الأزرار والصورة */
+header {
+  margin-top: 0;
+}
+
+.hero {
+  margin: 0;
+}
+
+.aboutMeImg {
+  margin: 0 auto; /* فقط توسيط أفقي بدون هوامش علوية/سفلية */
+}
+
+@media (max-width: 599px) {
+  header {
+    margin-top: 0; /* إلغاء المسافة في الهاتف أيضًا */
+  }
+}
+
+/* تحسين سلاسة المودال */
+.modal-overlay {
+  transition: opacity 0.3s ease;
+}
+
+.modal-content {
+  transition: transform 0.3s ease;
+}
+
+.modal-content img {
+  transition: transform 0.3s ease;
+}
