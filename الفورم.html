@@ -126,6 +126,14 @@
             transition: transform 0.1s ease;
         }
         
+        /* حاوية الصورة مع التحكم بالتكبير */
+        .image-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+        
         /* تنسيقات شريط التكبير */
         .zoom-control {
             margin: 2px 0 14px 0;
@@ -141,6 +149,7 @@
             color: #fff;
         }
 
+        /* استخدام range input الأصلي بدلاً من المخصص */
         input[type=range] {
             -webkit-appearance: none;
             appearance: none;
@@ -250,41 +259,37 @@
                 <input type="text" name="country" placeholder="الدولة" required>
                 <input type="text" name="name" placeholder="الاسم" required>
 
-                <!-- أرقام فقط (تم تعديلها) -->
-                <input type="text" name="quantity" placeholder="كم ثوب" required inputmode="numeric" class="only-numbers">
+                <input type="number" name="quantity" placeholder="كم ثوب" required min="1">
                 <input type="text" name="governorate" placeholder="المحافظة" required>
 
-                <!-- أرقام فقط (تم تعديلها) -->
-                <input type="text" name="phone" placeholder="رقم هاتف آخر" required inputmode="numeric" class="only-numbers">
+                <input type="tel" name="phone" placeholder="رقم هاتف آخر" required>
                 <textarea name="details" placeholder="تفاصيل العنوان"></textarea>
 
-                <!-- أرقام فقط (تم تعديلها) -->
-                <input type="text" name="form_number" placeholder="رقم الثوب" required inputmode="numeric" class="only-numbers">
-                
-                <!-- أرقام فقط (تم تعديلها) -->
-                <input type="text" name="alternate_phone" placeholder="رقم الهاتف" inputmode="numeric" class="only-numbers">
+                <!-- تم تغيير placeholder إلى "رقم الثوب" -->
+                <input type="text" name="form_number" placeholder="رقم الثوب" required>
+                <input type="tel" name="alternate_phone" placeholder="رقم الهاتف">
             </div>
 
             <div class="sizes-title">(سم) طريقة القياس</div>
             <img src="WhatsApp Image 2026-03-04 at 12.46.55 PM.jpeg" class="model-preview" id="measureImage" alt="طريقة القياس">
 
-            <!-- عنصر التحكم بالتكبير -->
+            <!-- عنصر التحكم بالتكبير - استخدام range input الأصلي -->
             <div class="zoom-control">
                 <span class="zoom-label" id="zoomLabel">تكبير الصور 🔍</span>
                 <input type="range" id="zoomSlider" min="1" max="1.7" step="0.01" value="1">
             </div>
 
-            <!-- شبكة المقاسات (6 حقول) - جميعها أرقام فقط (تم تعديلها) -->
+            <!-- شبكة المقاسات (6 حقول) -->
             <div class="sizes-grid">
                 <!-- العمود الأيمن -->
-                <input type="text" name="shoulder_width" placeholder="عرض الكتف" inputmode="numeric" class="only-numbers">
-                <input type="text" name="length_cm" placeholder="الطول" inputmode="numeric" class="only-numbers">
+                <input type="number" name="shoulder_width" placeholder="عرض الكتف">
+                <input type="number" name="length_cm" placeholder="الطول">
 
-                <input type="text" name="neck_circumference" placeholder="محيط الرقبة" inputmode="numeric" class="only-numbers">
-                <input type="text" name="arm_length" placeholder="طول الذراع" inputmode="numeric" class="only-numbers">
+                <input type="number" name="neck_circumference" placeholder="محيط الرقبة">
+                <input type="number" name="arm_length" placeholder="طول الذراع">
 
-                <input type="text" name="biceps_circumference" placeholder="محيط البايسبس" inputmode="numeric" class="only-numbers">
-                <input type="text" name="width" placeholder="العرض" inputmode="numeric" class="only-numbers">
+                <input type="number" name="biceps_circumference" placeholder="محيط البايسبس">
+                <input type="number" name="width" placeholder="العرض">
             </div>
 
             <input type="hidden" name="model_image" value="diagram-clean.png">
@@ -336,18 +341,6 @@
                 }, 100);
             });
 
-            // ===== الحل الجذري لمشكلة كتابة الأرقام على الآيفون =====
-            // نختار جميع الحقول التي تحتاج أرقاماً فقط
-            var numberInputs = document.querySelectorAll('.only-numbers');
-            
-            // نضيف لكل حقل مستمع حدث 'input' لتنظيف القيمة
-            for (var i = 0; i < numberInputs.length; i++) {
-                numberInputs[i].addEventListener('input', function(e) {
-                    // نزيل أي حرف ليس رقماً (0-9)
-                    this.value = this.value.replace(/[^0-9]/g, '');
-                });
-            }
-
             // معالجة تقديم النموذج
             document.getElementById("orderForm").addEventListener("submit", function(event) {
                 event.preventDefault();
@@ -374,6 +367,7 @@
                            (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
                 if (isIOS) {
+                    // للايفون
                     window.location.href = "https://wa.me/201061720462?text=" + encodedMessage;
                     setTimeout(() => {
                         if (window.history.length > 1) {
@@ -383,6 +377,7 @@
                         }
                     }, 2000);
                 } else {
+                    // للاندرويد والويندوز
                     if (navigator.userAgent.toLowerCase().includes("windows") || 
                         navigator.userAgent.toLowerCase().includes("mac")) {
                         window.open("https://mail.google.com/mail/?view=cm&fs=1&to=" 
