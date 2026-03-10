@@ -126,14 +126,6 @@
             transition: transform 0.1s ease;
         }
         
-        /* حاوية الصورة مع التحكم بالتكبير */
-        .image-container {
-            position: relative;
-            width: 100%;
-            overflow: hidden;
-            border-radius: 12px;
-        }
-        
         /* تنسيقات شريط التكبير */
         .zoom-control {
             margin: 2px 0 14px 0;
@@ -149,7 +141,6 @@
             color: #fff;
         }
 
-        /* استخدام range input الأصلي بدلاً من المخصص */
         input[type=range] {
             -webkit-appearance: none;
             appearance: none;
@@ -259,37 +250,41 @@
                 <input type="text" name="country" placeholder="الدولة" required>
                 <input type="text" name="name" placeholder="الاسم" required>
 
-                <input type="number" name="quantity" placeholder="كم ثوب" required min="1">
+                <!-- الأرقام فقط -->
+                <input type="number" name="quantity" placeholder="كم ثوب" required min="1" step="1" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
                 <input type="text" name="governorate" placeholder="المحافظة" required>
 
-                <input type="tel" name="phone" placeholder="رقم هاتف آخر" required>
+                <!-- الأرقام فقط -->
+                <input type="tel" name="phone" placeholder="رقم هاتف آخر" required onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
                 <textarea name="details" placeholder="تفاصيل العنوان"></textarea>
 
-                <!-- تم تغيير placeholder إلى "رقم الثوب" -->
-                <input type="text" name="form_number" placeholder="رقم الثوب" required>
-                <input type="tel" name="alternate_phone" placeholder="رقم الهاتف">
+                <!-- الأرقام فقط -->
+                <input type="text" name="form_number" placeholder="رقم الثوب" required onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
+                
+                <!-- الأرقام فقط -->
+                <input type="tel" name="alternate_phone" placeholder="رقم الهاتف" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
             </div>
 
             <div class="sizes-title">(سم) طريقة القياس</div>
             <img src="WhatsApp Image 2026-03-04 at 12.46.55 PM.jpeg" class="model-preview" id="measureImage" alt="طريقة القياس">
 
-            <!-- عنصر التحكم بالتكبير - استخدام range input الأصلي -->
+            <!-- عنصر التحكم بالتكبير -->
             <div class="zoom-control">
                 <span class="zoom-label" id="zoomLabel">تكبير الصور 🔍</span>
                 <input type="range" id="zoomSlider" min="1" max="1.7" step="0.01" value="1">
             </div>
 
-            <!-- شبكة المقاسات (6 حقول) -->
+            <!-- شبكة المقاسات (6 حقول) - جميعها أرقام فقط -->
             <div class="sizes-grid">
                 <!-- العمود الأيمن -->
-                <input type="number" name="shoulder_width" placeholder="عرض الكتف">
-                <input type="number" name="length_cm" placeholder="الطول">
+                <input type="number" name="shoulder_width" placeholder="عرض الكتف" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
+                <input type="number" name="length_cm" placeholder="الطول" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
 
-                <input type="number" name="neck_circumference" placeholder="محيط الرقبة">
-                <input type="number" name="arm_length" placeholder="طول الذراع">
+                <input type="number" name="neck_circumference" placeholder="محيط الرقبة" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
+                <input type="number" name="arm_length" placeholder="طول الذراع" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
 
-                <input type="number" name="biceps_circumference" placeholder="محيط البايسبس">
-                <input type="number" name="width" placeholder="العرض">
+                <input type="number" name="biceps_circumference" placeholder="محيط البايسبس" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
+                <input type="number" name="width" placeholder="العرض" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
             </div>
 
             <input type="hidden" name="model_image" value="diagram-clean.png">
@@ -367,7 +362,6 @@
                            (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
                 if (isIOS) {
-                    // للايفون
                     window.location.href = "https://wa.me/201061720462?text=" + encodedMessage;
                     setTimeout(() => {
                         if (window.history.length > 1) {
@@ -377,7 +371,6 @@
                         }
                     }, 2000);
                 } else {
-                    // للاندرويد والويندوز
                     if (navigator.userAgent.toLowerCase().includes("windows") || 
                         navigator.userAgent.toLowerCase().includes("mac")) {
                         window.open("https://mail.google.com/mail/?view=cm&fs=1&to=" 
