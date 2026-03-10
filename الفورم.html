@@ -2,10 +2,15 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>تأكيد الطلب المتكامل</title>
     <style>
         /* الثيم الموحد مع أنيميشن كامل لجميع العناصر */
+        * {
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+        }
+        
         body{
             font-family: Arial, sans-serif;
             background: linear-gradient(145deg, #0d0d0d, #1a1a1a);
@@ -67,6 +72,8 @@
             resize: none;
             line-height: 1.4;
             overflow: hidden;
+            -webkit-appearance: none;
+            appearance: none;
         }
 
         /* استثناء لحقل "رقم الثوب" */
@@ -109,18 +116,24 @@
             margin:0 auto 4px auto;
             border-radius:12px;
             border:1px solid rgba(255,255,255,0.3);
-            transition: transform 0.2s ease, box-shadow 0.4s ease;
             cursor: pointer;
             max-width:100%;
             height:auto;
-            will-change: transform;
             transform-origin: bottom center;
+            -webkit-user-select: none;
+            user-select: none;
+            pointer-events: none;
+            transition: transform 0.1s ease;
         }
-        .model-preview:active{
-            transform: scale(1.05);
-            box-shadow:0 0 25px rgba(255,255,255,0.5);
+        
+        /* حاوية الصورة مع التحكم بالتكبير */
+        .image-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 12px;
         }
-
+        
         /* تنسيقات شريط التكبير */
         .zoom-control {
             margin: 2px 0 14px 0;
@@ -134,52 +147,60 @@
             font-weight: bold;
             margin-bottom: 3px;
             color: #fff;
-            opacity: 1;
-            transition: opacity 0.15s ease;
-            pointer-events: none;
-        }
-        .zoom-label.hidden {
-            opacity: 0;
         }
 
-        /* شريط التمرير المخصص */
-        .custom-slider {
-            position: relative;
+        /* استخدام range input الأصلي بدلاً من المخصص */
+        input[type=range] {
+            -webkit-appearance: none;
+            appearance: none;
             width: 100%;
             height: 5px;
             background: rgba(255,255,255,0.2);
             border-radius: 10px;
-            cursor: pointer;
+            outline: none;
             direction: ltr;
-            margin-top: 0px;
         }
 
-        /* كرة السحب */
-        .slider-thumb {
-            position: absolute;
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
             width: 24px;
             height: 24px;
             background: #fff;
             border-radius: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
+            cursor: pointer;
             box-shadow: 0 0 8px rgba(255,255,255,0.5);
             transition: all 0.2s ease;
-            cursor: pointer;
-            will-change: transform;
+            border: none;
         }
 
-        .slider-thumb:hover {
-            transform: translate(-50%, -50%) scale(1.15);
+        input[type=range]::-webkit-slider-thumb:hover {
             background: #28a745;
+            transform: scale(1.15);
             box-shadow: 0 0 15px rgba(40, 167, 69, 0.5);
         }
 
-        .slider-thumb:active,
-        .slider-thumb.dragging {
-            transform: translate(-50%, -50%) scale(1.1);
+        input[type=range]::-webkit-slider-thumb:active {
             background: #1e7e34;
-            box-shadow: 0 0 20px rgba(255,255,255,0.8), 0 0 40px rgba(40, 167, 69, 0.6);
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(255,255,255,0.8);
+        }
+
+        input[type=range]::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            background: #fff;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 8px rgba(255,255,255,0.5);
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        input[type=range]::-moz-range-thumb:hover {
+            background: #28a745;
+            transform: scale(1.15);
+            box-shadow: 0 0 15px rgba(40, 167, 69, 0.5);
         }
 
         .sizes-title{ 
@@ -209,10 +230,23 @@
             font-size:15px;
             font-weight:bold; 
             transition: all 0.3s ease;
+            -webkit-appearance: none;
+            appearance: none;
         }
         button:hover{ transform: scale(1.08); box-shadow:0 0 15px rgba(255,255,255,0.3); }
         .confirm{ background:#28a745; color:#fff; }
         .cancel{ background:#dc3545; color:#fff; }
+        
+        /* تحسين للأيفون */
+        @supports (-webkit-touch-callout: none) {
+            .container {
+                width: 260px;
+                padding: 3px 20px 5px 20px;
+            }
+            input, textarea, button {
+                font-size: 16px !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -225,7 +259,7 @@
                 <input type="text" name="country" placeholder="الدولة" required>
                 <input type="text" name="name" placeholder="الاسم" required>
 
-                <input type="number" name="quantity" placeholder="كم ثوب تريد ؟" required min="1">
+                <input type="number" name="quantity" placeholder="كم ثوب" required min="1">
                 <input type="text" name="governorate" placeholder="المحافظة" required>
 
                 <input type="tel" name="phone" placeholder="رقم هاتف آخر" required>
@@ -239,12 +273,10 @@
             <div class="sizes-title">(سم) طريقة القياس</div>
             <img src="WhatsApp Image 2026-03-04 at 12.46.55 PM.jpeg" class="model-preview" id="measureImage" alt="طريقة القياس">
 
-            <!-- عنصر التحكم بالتكبير -->
+            <!-- عنصر التحكم بالتكبير - استخدام range input الأصلي -->
             <div class="zoom-control">
                 <span class="zoom-label" id="zoomLabel">تكبير الصور 🔍</span>
-                <div class="custom-slider" id="customSlider">
-                    <div class="slider-thumb" id="sliderThumb"></div>
-                </div>
+                <input type="range" id="zoomSlider" min="1" max="1.7" step="0.01" value="1">
             </div>
 
             <!-- شبكة المقاسات (6 حقول) -->
@@ -270,124 +302,105 @@
     </div>
 
     <script>
-        const img = document.getElementById("measureImage");
-        const slider = document.getElementById("customSlider");
-        const thumb = document.getElementById("sliderThumb");
-        const zoomLabel = document.getElementById("zoomLabel");
+        (function() {
+            const img = document.getElementById("measureImage");
+            const zoomSlider = document.getElementById("zoomSlider");
+            const zoomLabel = document.getElementById("zoomLabel");
 
-        let isDragging = false;
-        const minZoom = 1;
-        const maxZoom = 1.7;  // تم التعديل: من 1.6 إلى 1.7 (تكبير قليل)
+            if (!img || !zoomSlider || !zoomLabel) return;
 
-        function setZoomFromEvent(clientX) {
-            const rect = slider.getBoundingClientRect();
-            let x = clientX - rect.left;
-            x = Math.max(0, Math.min(x, rect.width));
-            const percentage = x / rect.width;
-            const zoomValue = minZoom + (maxZoom - minZoom) * percentage;
-            thumb.style.left = percentage * 100 + "%";
-            img.style.transform = `scale(${zoomValue})`;
+            // تحديث تكبير الصورة عند تغيير الشريط
+            zoomSlider.addEventListener("input", function() {
+                const zoomValue = this.value;
+                img.style.transform = `scale(${zoomValue})`;
+                img.style.webkitTransform = `scale(${zoomValue})`;
+                
+                // التمرير للأعلى عند أقصى تكبير
+                if (zoomValue >= 1.69) {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
 
-            if (percentage >= 0.99) {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        }
+            // إظهار/إخفاء النص عند بدء/انتهاء التفاعل
+            zoomSlider.addEventListener("touchstart", function() {
+                zoomLabel.classList.add('hidden');
+            });
 
-        function startDrag(e, clientX) {
-            isDragging = true;
-            setZoomFromEvent(clientX);
-            e.preventDefault();
-            thumb.classList.add('dragging');
-            img.style.transition = 'none';
-            thumb.style.transition = 'none';
-            // إخفاء كلمة "تكبير الصور" عند السحب
-            zoomLabel.classList.add('hidden');
-        }
-
-        function stopDrag() {
-            if (isDragging) {
-                isDragging = false;
-                thumb.classList.remove('dragging');
-                img.style.transition = '';
-                thumb.style.transition = '';
-                // إظهار كلمة "تكبير الصور" عند الإفلات
+            zoomSlider.addEventListener("touchend", function() {
                 zoomLabel.classList.remove('hidden');
-            }
-        }
+            });
 
-        slider.addEventListener("mousedown", (e) => startDrag(e, e.clientX));
-        thumb.addEventListener("mousedown", (e) => startDrag(e, e.clientX));
+            zoomSlider.addEventListener("mousedown", function() {
+                zoomLabel.classList.add('hidden');
+            });
 
-        window.addEventListener("mousemove", (e) => {
-            if (!isDragging) return;
-            setZoomFromEvent(e.clientX);
-            e.preventDefault();
-        });
+            zoomSlider.addEventListener("mouseup", function() {
+                zoomLabel.classList.add('hidden');
+                setTimeout(() => {
+                    zoomLabel.classList.remove('hidden');
+                }, 100);
+            });
 
-        window.addEventListener("mouseup", stopDrag);
+            // معالجة تقديم النموذج
+            document.getElementById("orderForm").addEventListener("submit", function(event) {
+                event.preventDefault();
 
-        slider.addEventListener("touchstart", (e) => {
-            e.preventDefault();
-            startDrag(e, e.touches[0].clientX);
-        }, { passive: false });
+                const formData = new FormData(this);
+                let body = "تفاصيل الطلب:\n\n" +
+                    "الاسم: " + formData.get("name") + "\n" +
+                    "الدولة: " + formData.get("country") + "\n" +
+                    "المحافظة: " + formData.get("governorate") + "\n" +
+                    "كم ثوب: " + formData.get("quantity") + "\n" +
+                    "تفاصيل العنوان: " + formData.get("details") + "\n" +
+                    "رقم هاتف آخر: " + formData.get("phone") + "\n" +
+                    "رقم الهاتف: " + formData.get("alternate_phone") + "\n" +
+                    "رقم الثوب: " + formData.get("form_number") + "\n" +
+                    "عرض الكتف: " + formData.get("shoulder_width") + "\n" +
+                    "محيط الرقبة: " + formData.get("neck_circumference") + "\n" +
+                    "محيط البايسبس: " + formData.get("biceps_circumference") + "\n" +
+                    "الطول: " + formData.get("length_cm") + "\n" +
+                    "طول الذراع: " + formData.get("arm_length") + "\n" +
+                    "العرض: " + formData.get("width");
 
-        thumb.addEventListener("touchstart", (e) => {
-            e.preventDefault();
-            startDrag(e, e.touches[0].clientX);
-        }, { passive: false });
+                let encodedMessage = encodeURIComponent(body);
+                let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+                           (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
-        window.addEventListener("touchmove", (e) => {
-            if (!isDragging) return;
-            e.preventDefault();
-            setZoomFromEvent(e.touches[0].clientX);
-        }, { passive: false });
+                if (isIOS) {
+                    // للايفون
+                    window.location.href = "https://wa.me/201061720462?text=" + encodedMessage;
+                    setTimeout(() => {
+                        if (window.history.length > 1) {
+                            window.history.back();
+                        } else {
+                            window.close();
+                        }
+                    }, 2000);
+                } else {
+                    // للاندرويد والويندوز
+                    if (navigator.userAgent.toLowerCase().includes("windows") || 
+                        navigator.userAgent.toLowerCase().includes("mac")) {
+                        window.open("https://mail.google.com/mail/?view=cm&fs=1&to=" 
+                            + encodeURIComponent("elansarialansary@gmail.com") 
+                            + "&su=" + encodeURIComponent("طلب جديد من الموقع") 
+                            + "&body=" + encodedMessage, "_blank");
+                    } else {
+                        window.open("https://wa.me/201061720462?text=" + encodedMessage, "_blank");
+                    }
+                    setTimeout(() => { window.close(); }, 1500);
+                }
+            });
 
-        window.addEventListener("touchend", stopDrag);
-        window.addEventListener("touchcancel", stopDrag);
+            // زر الإلغاء
+            document.getElementById("cancelBtn").addEventListener("click", function() {
+                if (window.history.length > 1) {
+                    window.history.back();
+                } else {
+                    window.close();
+                }
+            });
 
-        thumb.style.left = "0%";
-        img.style.transform = "scale(1)";
-
-        document.getElementById("orderForm").addEventListener("submit", function(event){
-            event.preventDefault();
-
-            const formData = new FormData(this);
-            let body = "تفاصيل الطلب:\n\n" +
-                "الاسم: " + formData.get("name") + "\n" +
-                "الدولة: " + formData.get("country") + "\n" +
-                "المحافظة: " + formData.get("governorate") + "\n" +
-                "كم ثوب: " + formData.get("quantity") + "\n" +
-                "تفاصيل العنوان: " + formData.get("details") + "\n" +
-                "رقم هاتف آخر: " + formData.get("phone") + "\n" +
-                "رقم الهاتف: " + formData.get("alternate_phone") + "\n" +
-                "رقم الثوب: " + formData.get("form_number") + "\n" +
-                "عرض الكتف: " + formData.get("shoulder_width") + "\n" +
-                "محيط الرقبة: " + formData.get("neck_circumference") + "\n" +
-                "محيط البايسبس: " + formData.get("biceps_circumference") + "\n" +
-                "الطول: " + formData.get("length_cm") + "\n" +
-                "طول الذراع: " + formData.get("arm_length") + "\n" +
-                "العرض: " + formData.get("width");
-
-            let encodedMessage = encodeURIComponent(body);
-            let userAgent = navigator.userAgent.toLowerCase();
-
-            let link;
-            if (userAgent.includes("windows") || userAgent.includes("mac")) {
-                link = "https://mail.google.com/mail/?view=cm&fs=1&to=" 
-                    + encodeURIComponent("elansarialansary@gmail.com") 
-                    + "&su=" + encodeURIComponent("طلب جديد من الموقع") 
-                    + "&body=" + encodedMessage;
-            } else {
-                link = "https://wa.me/201061720462?text=" + encodedMessage;
-            }
-
-            window.open(link, "_blank", "width=800,height=600");
-            setTimeout(() => { window.close(); }, 1500);
-        });
-
-        document.getElementById("cancelBtn").addEventListener("click", function(){
-            window.close();
-        });
+        })();
     </script>
 </body>
 </html>
