@@ -126,14 +126,6 @@
             transition: transform 0.1s ease;
         }
         
-        /* حاوية الصورة مع التحكم بالتكبير */
-        .image-container {
-            position: relative;
-            width: 100%;
-            overflow: hidden;
-            border-radius: 12px;
-        }
-        
         /* تنسيقات شريط التكبير */
         .zoom-control {
             margin: 2px 0 14px 0;
@@ -149,7 +141,6 @@
             color: #fff;
         }
 
-        /* استخدام range input الأصلي بدلاً من المخصص */
         input[type=range] {
             -webkit-appearance: none;
             appearance: none;
@@ -259,37 +250,41 @@
                 <input type="text" name="country" placeholder="الدولة" required>
                 <input type="text" name="name" placeholder="الاسم" required>
 
-                <input type="number" name="quantity" placeholder="كم ثوب" required min="1">
+                <!-- الأرقام فقط (عربية وإنجليزية) -->
+                <input type="text" name="quantity" placeholder="كم ثوب" required inputmode="numeric" class="only-numbers">
                 <input type="text" name="governorate" placeholder="المحافظة" required>
 
-                <input type="tel" name="phone" placeholder="رقم هاتف آخر" required>
+                <!-- الأرقام فقط (عربية وإنجليزية) -->
+                <input type="text" name="phone" placeholder="رقم هاتف آخر" required inputmode="numeric" class="only-numbers">
                 <textarea name="details" placeholder="تفاصيل العنوان"></textarea>
 
-                <!-- تم تغيير placeholder إلى "رقم الثوب" -->
-                <input type="text" name="form_number" placeholder="رقم الثوب" required>
-                <input type="tel" name="alternate_phone" placeholder="رقم الهاتف">
+                <!-- الأرقام فقط (عربية وإنجليزية) -->
+                <input type="text" name="form_number" placeholder="رقم الثوب" required inputmode="numeric" class="only-numbers">
+                
+                <!-- الأرقام فقط (عربية وإنجليزية) -->
+                <input type="text" name="alternate_phone" placeholder="رقم الهاتف" inputmode="numeric" class="only-numbers">
             </div>
 
             <div class="sizes-title">(سم) طريقة القياس</div>
             <img src="WhatsApp Image 2026-03-04 at 12.46.55 PM.jpeg" class="model-preview" id="measureImage" alt="طريقة القياس">
 
-            <!-- عنصر التحكم بالتكبير - استخدام range input الأصلي -->
+            <!-- عنصر التحكم بالتكبير -->
             <div class="zoom-control">
                 <span class="zoom-label" id="zoomLabel">تكبير الصور 🔍</span>
                 <input type="range" id="zoomSlider" min="1" max="1.7" step="0.01" value="1">
             </div>
 
-            <!-- شبكة المقاسات (6 حقول) -->
+            <!-- شبكة المقاسات (6 حقول) - جميعها أرقام فقط (عربية وإنجليزية) -->
             <div class="sizes-grid">
                 <!-- العمود الأيمن -->
-                <input type="number" name="shoulder_width" placeholder="عرض الكتف">
-                <input type="number" name="length_cm" placeholder="الطول">
+                <input type="text" name="shoulder_width" placeholder="عرض الكتف" inputmode="numeric" class="only-numbers">
+                <input type="text" name="length_cm" placeholder="الطول" inputmode="numeric" class="only-numbers">
 
-                <input type="number" name="neck_circumference" placeholder="محيط الرقبة">
-                <input type="number" name="arm_length" placeholder="طول الذراع">
+                <input type="text" name="neck_circumference" placeholder="محيط الرقبة" inputmode="numeric" class="only-numbers">
+                <input type="text" name="arm_length" placeholder="طول الذراع" inputmode="numeric" class="only-numbers">
 
-                <input type="number" name="biceps_circumference" placeholder="محيط البايسبس">
-                <input type="number" name="width" placeholder="العرض">
+                <input type="text" name="biceps_circumference" placeholder="محيط البايسبس" inputmode="numeric" class="only-numbers">
+                <input type="text" name="width" placeholder="العرض" inputmode="numeric" class="only-numbers">
             </div>
 
             <input type="hidden" name="model_image" value="diagram-clean.png">
@@ -341,6 +336,39 @@
                 }, 100);
             });
 
+            // دالة لتحويل الأرقام العربية إلى إنجليزية
+            function convertArabicNumbersToEnglish(str) {
+                const arabicNumbers = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+                const englishNumbers = ['0','1','2','3','4','5','6','7','8','9'];
+                let result = '';
+                for (let i = 0; i < str.length; i++) {
+                    const char = str[i];
+                    const index = arabicNumbers.indexOf(char);
+                    if (index !== -1) {
+                        result += englishNumbers[index];
+                    } else {
+                        result += char;
+                    }
+                }
+                return result;
+            }
+
+            // اختيار جميع الحقول التي تطلب أرقاماً فقط
+            var numberInputs = document.querySelectorAll('.only-numbers');
+            
+            // إضافة مستمع حدث input لكل حقل
+            for (var i = 0; i < numberInputs.length; i++) {
+                numberInputs[i].addEventListener('input', function(e) {
+                    // تحويل الأرقام العربية إلى إنجليزية ثم السماح فقط بالأرقام
+                    let converted = convertArabicNumbersToEnglish(this.value);
+                    // السماح فقط بالأرقام 0-9
+                    converted = converted.replace(/[^0-9]/g, '');
+                    if (this.value !== converted) {
+                        this.value = converted;
+                    }
+                });
+            }
+
             // معالجة تقديم النموذج
             document.getElementById("orderForm").addEventListener("submit", function(event) {
                 event.preventDefault();
@@ -367,7 +395,6 @@
                            (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
                 if (isIOS) {
-                    // للايفون
                     window.location.href = "https://wa.me/201061720462?text=" + encodedMessage;
                     setTimeout(() => {
                         if (window.history.length > 1) {
@@ -377,7 +404,6 @@
                         }
                     }, 2000);
                 } else {
-                    // للاندرويد والويندوز
                     if (navigator.userAgent.toLowerCase().includes("windows") || 
                         navigator.userAgent.toLowerCase().includes("mac")) {
                         window.open("https://mail.google.com/mail/?view=cm&fs=1&to=" 
