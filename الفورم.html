@@ -251,18 +251,18 @@
                 <input type="text" name="name" placeholder="الاسم" required>
 
                 <!-- الأرقام فقط -->
-                <input type="tel" name="quantity" placeholder="كم ثوب" required onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
+                <input type="tel" name="quantity" placeholder="كم ثوب" required inputmode="numeric" pattern="\d*">
                 <input type="text" name="governorate" placeholder="المحافظة" required>
 
                 <!-- الأرقام فقط -->
-                <input type="tel" name="phone" placeholder="رقم هاتف آخر" required onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
+                <input type="tel" name="phone" placeholder="رقم هاتف آخر" required inputmode="numeric" pattern="\d*">
                 <textarea name="details" placeholder="تفاصيل العنوان"></textarea>
 
                 <!-- الأرقام فقط -->
-                <input type="tel" name="form_number" placeholder="رقم الثوب" required onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
+                <input type="tel" name="form_number" placeholder="رقم الثوب" required inputmode="numeric" pattern="\d*">
                 
                 <!-- الأرقام فقط -->
-                <input type="tel" name="alternate_phone" placeholder="رقم الهاتف" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
+                <input type="tel" name="alternate_phone" placeholder="رقم الهاتف" inputmode="numeric" pattern="\d*">
             </div>
 
             <div class="sizes-title">(سم) طريقة القياس</div>
@@ -277,14 +277,14 @@
             <!-- شبكة المقاسات (6 حقول) - جميعها أرقام فقط -->
             <div class="sizes-grid">
                 <!-- العمود الأيمن -->
-                <input type="tel" name="shoulder_width" placeholder="عرض الكتف" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
-                <input type="tel" name="length_cm" placeholder="الطول" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
+                <input type="tel" name="shoulder_width" placeholder="عرض الكتف" inputmode="numeric" pattern="\d*">
+                <input type="tel" name="length_cm" placeholder="الطول" inputmode="numeric" pattern="\d*">
 
-                <input type="tel" name="neck_circumference" placeholder="محيط الرقبة" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
-                <input type="tel" name="arm_length" placeholder="طول الذراع" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
+                <input type="tel" name="neck_circumference" placeholder="محيط الرقبة" inputmode="numeric" pattern="\d*">
+                <input type="tel" name="arm_length" placeholder="طول الذراع" inputmode="numeric" pattern="\d*">
 
-                <input type="tel" name="biceps_circumference" placeholder="محيط البايسبس" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
-                <input type="tel" name="width" placeholder="العرض" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
+                <input type="tel" name="biceps_circumference" placeholder="محيط البايسبس" inputmode="numeric" pattern="\d*">
+                <input type="tel" name="width" placeholder="العرض" inputmode="numeric" pattern="\d*">
             </div>
 
             <input type="hidden" name="model_image" value="diagram-clean.png">
