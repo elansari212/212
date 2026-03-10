@@ -251,7 +251,7 @@
                 <input type="text" name="name" placeholder="الاسم" required>
 
                 <!-- الأرقام فقط -->
-                <input type="number" name="quantity" placeholder="كم ثوب" required min="1" step="1" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
+                <input type="tel" name="quantity" placeholder="كم ثوب" required onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
                 <input type="text" name="governorate" placeholder="المحافظة" required>
 
                 <!-- الأرقام فقط -->
@@ -259,7 +259,7 @@
                 <textarea name="details" placeholder="تفاصيل العنوان"></textarea>
 
                 <!-- الأرقام فقط -->
-                <input type="text" name="form_number" placeholder="رقم الثوب" required onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
+                <input type="tel" name="form_number" placeholder="رقم الثوب" required onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
                 
                 <!-- الأرقام فقط -->
                 <input type="tel" name="alternate_phone" placeholder="رقم الهاتف" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
@@ -277,14 +277,14 @@
             <!-- شبكة المقاسات (6 حقول) - جميعها أرقام فقط -->
             <div class="sizes-grid">
                 <!-- العمود الأيمن -->
-                <input type="number" name="shoulder_width" placeholder="عرض الكتف" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
-                <input type="number" name="length_cm" placeholder="الطول" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
+                <input type="tel" name="shoulder_width" placeholder="عرض الكتف" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
+                <input type="tel" name="length_cm" placeholder="الطول" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
 
-                <input type="number" name="neck_circumference" placeholder="محيط الرقبة" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
-                <input type="number" name="arm_length" placeholder="طول الذراع" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
+                <input type="tel" name="neck_circumference" placeholder="محيط الرقبة" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
+                <input type="tel" name="arm_length" placeholder="طول الذراع" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
 
-                <input type="number" name="biceps_circumference" placeholder="محيط البايسبس" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
-                <input type="number" name="width" placeholder="العرض" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
+                <input type="tel" name="biceps_circumference" placeholder="محيط البايسبس" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
+                <input type="tel" name="width" placeholder="العرض" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" pattern="\d*" inputmode="numeric">
             </div>
 
             <input type="hidden" name="model_image" value="diagram-clean.png">
