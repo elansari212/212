@@ -250,19 +250,19 @@
                 <input type="text" name="country" placeholder="الدولة" required>
                 <input type="text" name="name" placeholder="الاسم" required>
 
-                <!-- الأرقام فقط -->
-                <input type="tel" name="quantity" placeholder="كم ثوب" required inputmode="numeric" pattern="\d*">
+                <!-- أرقام فقط (تم تعديلها) -->
+                <input type="text" name="quantity" placeholder="كم ثوب" required inputmode="numeric" class="only-numbers">
                 <input type="text" name="governorate" placeholder="المحافظة" required>
 
-                <!-- الأرقام فقط -->
-                <input type="tel" name="phone" placeholder="رقم هاتف آخر" required inputmode="numeric" pattern="\d*">
+                <!-- أرقام فقط (تم تعديلها) -->
+                <input type="text" name="phone" placeholder="رقم هاتف آخر" required inputmode="numeric" class="only-numbers">
                 <textarea name="details" placeholder="تفاصيل العنوان"></textarea>
 
-                <!-- الأرقام فقط -->
-                <input type="tel" name="form_number" placeholder="رقم الثوب" required inputmode="numeric" pattern="\d*">
+                <!-- أرقام فقط (تم تعديلها) -->
+                <input type="text" name="form_number" placeholder="رقم الثوب" required inputmode="numeric" class="only-numbers">
                 
-                <!-- الأرقام فقط -->
-                <input type="tel" name="alternate_phone" placeholder="رقم الهاتف" inputmode="numeric" pattern="\d*">
+                <!-- أرقام فقط (تم تعديلها) -->
+                <input type="text" name="alternate_phone" placeholder="رقم الهاتف" inputmode="numeric" class="only-numbers">
             </div>
 
             <div class="sizes-title">(سم) طريقة القياس</div>
@@ -274,17 +274,17 @@
                 <input type="range" id="zoomSlider" min="1" max="1.7" step="0.01" value="1">
             </div>
 
-            <!-- شبكة المقاسات (6 حقول) - جميعها أرقام فقط -->
+            <!-- شبكة المقاسات (6 حقول) - جميعها أرقام فقط (تم تعديلها) -->
             <div class="sizes-grid">
                 <!-- العمود الأيمن -->
-                <input type="tel" name="shoulder_width" placeholder="عرض الكتف" inputmode="numeric" pattern="\d*">
-                <input type="tel" name="length_cm" placeholder="الطول" inputmode="numeric" pattern="\d*">
+                <input type="text" name="shoulder_width" placeholder="عرض الكتف" inputmode="numeric" class="only-numbers">
+                <input type="text" name="length_cm" placeholder="الطول" inputmode="numeric" class="only-numbers">
 
-                <input type="tel" name="neck_circumference" placeholder="محيط الرقبة" inputmode="numeric" pattern="\d*">
-                <input type="tel" name="arm_length" placeholder="طول الذراع" inputmode="numeric" pattern="\d*">
+                <input type="text" name="neck_circumference" placeholder="محيط الرقبة" inputmode="numeric" class="only-numbers">
+                <input type="text" name="arm_length" placeholder="طول الذراع" inputmode="numeric" class="only-numbers">
 
-                <input type="tel" name="biceps_circumference" placeholder="محيط البايسبس" inputmode="numeric" pattern="\d*">
-                <input type="tel" name="width" placeholder="العرض" inputmode="numeric" pattern="\d*">
+                <input type="text" name="biceps_circumference" placeholder="محيط البايسبس" inputmode="numeric" class="only-numbers">
+                <input type="text" name="width" placeholder="العرض" inputmode="numeric" class="only-numbers">
             </div>
 
             <input type="hidden" name="model_image" value="diagram-clean.png">
@@ -335,6 +335,18 @@
                     zoomLabel.classList.remove('hidden');
                 }, 100);
             });
+
+            // ===== الحل الجذري لمشكلة كتابة الأرقام على الآيفون =====
+            // نختار جميع الحقول التي تحتاج أرقاماً فقط
+            var numberInputs = document.querySelectorAll('.only-numbers');
+            
+            // نضيف لكل حقل مستمع حدث 'input' لتنظيف القيمة
+            for (var i = 0; i < numberInputs.length; i++) {
+                numberInputs[i].addEventListener('input', function(e) {
+                    // نزيل أي حرف ليس رقماً (0-9)
+                    this.value = this.value.replace(/[^0-9]/g, '');
+                });
+            }
 
             // معالجة تقديم النموذج
             document.getElementById("orderForm").addEventListener("submit", function(event) {
