@@ -33,7 +33,7 @@
             -webkit-backdrop-filter: blur(20px);
             padding:3px 8px 5px 8px;
             border-radius:20px;
-            width:330px; /* تعيين العرض إلى 330px */
+            width:300px;
             box-shadow:0 0 25px rgba(0,0,0,0.5);
             border:1px solid rgba(255,255,255,0.15);
             transition: transform 0.3s ease;
@@ -99,7 +99,7 @@
             text-indent: 2px; /* مسافة بادئة بسيطة */
         }
 
-        /* خانتا التفاصيل (مكبرة قليلاً) */
+        /* خانتا التفاصيل (ارتفاع 44px) */
         textarea.large-detail {
             width:100%;
             padding:8px 8px;
@@ -120,18 +120,26 @@
             -webkit-font-smoothing: antialiased;
             resize: none;
             overflow: hidden;
-            height: 55px;
-            min-height: 55px;
-            max-height: 55px;
+            height: 44px;
+            min-height: 44px;
+            max-height: 44px;
         }
 
-        /* تأثير focus الموحد */
+        /* تأثير focus الموحد لجميع الحقول ما عدا التفاصيل (تكبير عادي 1.05) */
         .form-grid input:focus,
-        .form-grid textarea:focus,
+        .form-grid textarea:not(.large-detail):focus,
         .sizes-grid input:focus,
-        .sizes-grid textarea:focus {
+        .sizes-grid textarea:not(.large-detail):focus {
             background: rgba(255, 255, 255, 0.2);
             transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            outline: none;
+        }
+
+        /* تأثير focus خاص لخانتي التفاصيل - تكبير أقل (1.02) */
+        textarea.large-detail:focus {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.02);  /* تقليل التكبير */
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
             outline: none;
         }
@@ -192,7 +200,7 @@
         /* تحسين للأيفون */
         @supports (-webkit-touch-callout: none) {
             .container {
-                width: 320px; /* تعديل للأيفون ليكون أقل بقليل */
+                width: 290px;
                 padding: 3px 8px 5px 8px;
             }
             input, textarea, button {
@@ -200,6 +208,9 @@
             }
             textarea.large-detail {
                 font-size: 11px !important;
+                height: 44px;
+                min-height: 44px;
+                max-height: 44px;
             }
             button {
                 font-size: 15px !important;
@@ -238,8 +249,8 @@
                 <!-- العمود الأيسر (الوزن) -->
                 <input type="tel" name="width" placeholder="الوزن" inputmode="numeric" pattern="\d*">
                 
-                <!-- تفاصيل القياس (مكبرة قليلاً) - تمتد على عمودين -->
-                <textarea name="extra_measure_details" placeholder="تفاصيل اخري بالنسبة للقياس.. كرش بايسبس الخ...." class="full-width large-detail" style="grid-column: span 2;"></textarea>
+                <!-- تفاصيل القياس (تم تعديل النص) -->
+                <textarea name="extra_measure_details" placeholder="تفاصيل اخري بالنسبة للمقاسات .. كرش با يسبس الخ...." class="full-width large-detail" style="grid-column: span 2;"></textarea>
             </div>
 
             <input type="hidden" name="model_image" value="diagram-clean.png">
@@ -268,7 +279,7 @@
                     "تفاصيل اخري للعنوان: " + (formData.get("details") || "") + "\n" +
                     "الطول: " + (formData.get("length_cm") || "") + "\n" +
                     "الوزن: " + (formData.get("width") || "") + "\n" +
-                    "تفاصيل اخري للقياس (كرش، بايسبس...): " + (formData.get("extra_measure_details") || "");
+                    "تفاصيل اخري للمقاسات (كرش، بايسبس...): " + (formData.get("extra_measure_details") || "");
 
                 let encodedMessage = encodeURIComponent(body);
                 let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
