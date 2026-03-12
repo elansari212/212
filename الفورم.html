@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>تأكيد الطلب المتكامل</title>
+    <!-- استيراد خط Cairo بوزن 900 (الأثخن) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@900&display=swap" rel="stylesheet">
     <style>
         /* الثيم الموحد مع أنيميشن كامل لجميع العناصر */
         * {
@@ -12,7 +16,8 @@
         }
         
         body{
-            font-family: Arial, sans-serif;
+            /* خط Cairo بوزن 900 (أعرض بكثير) */
+            font-family: 'Cairo', sans-serif;
             background: linear-gradient(145deg, #0d0d0d, #1a1a1a);
             color:#fff;
             display:flex;
@@ -26,9 +31,9 @@
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            padding:3px 25px 5px 25px;
+            padding:3px 8px 5px 8px;
             border-radius:20px;
-            width:270px;
+            width:330px; /* تعيين العرض إلى 330px */
             box-shadow:0 0 25px rgba(0,0,0,0.5);
             border:1px solid rgba(255,255,255,0.15);
             transition: transform 0.3s ease;
@@ -38,68 +43,97 @@
             text-align:center; 
             margin-top: 0px;
             margin-bottom:5px; 
-            font-size:17px;
+            font-size:18px;
             color:#fff; 
-            font-weight: bold;
+            font-weight: 900;
+            letter-spacing: -0.3px;
+            font-family: 'Cairo', sans-serif;
         }
 
-        /* شبكة الحقول الأساسية (8 حقول) */
+        /* شبكة الحقول الأساسية */
         .form-grid{
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 6px 8px;
+            gap: 4px 5px;
             margin-bottom: 2px;
+            direction: rtl;
         }
-        /* تصميم موحد لجميع حقول الإدخال مع أنيميشن */
+        /* تصميم موحد لجميع حقول الإدخال (ما عدا التفاصيل) */
         .form-grid input,
-        .form-grid textarea,
-        .sizes-grid input {
+        .form-grid textarea:not(.large-detail),
+        .sizes-grid input,
+        .sizes-grid textarea:not(.large-detail) {
             width:100%;
-            padding:5px 8px;
+            padding:6px 6px;      
+            margin:0;
+            border:none;
+            border-radius:8px;     
+            background: rgba(255,255,255,0.1);
+            color:#fff;
+            font-size:10px;        /* حجم النص كما هو */
+            font-weight: 900;      /* أثخن وزن */
+            letter-spacing: -0.1px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            direction: rtl;
+            text-align: right;
+            resize: none;
+            line-height: 1.4;       
+            overflow: hidden;
+            -webkit-appearance: none;
+            appearance: none;
+            font-family: 'Cairo', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            height: 42px;
+        }
+
+        /* استثناء لحقل "رقم الثوب" - إزالة padding الجانبي بالكامل مع مسافة بادئة بسيطة */
+        input[name="form_number"] {
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: -0.1px;
+            padding: 5px 0px 5px 0px; /* padding أفقي صفر */
+            line-height: 1.5;
+            height: 42px;
+            font-family: 'Cairo', sans-serif;
+            text-indent: 2px; /* مسافة بادئة بسيطة */
+        }
+
+        /* خانتا التفاصيل (مكبرة قليلاً) */
+        textarea.large-detail {
+            width:100%;
+            padding:8px 8px;
             margin:0;
             border:none;
             border-radius:8px;
             background: rgba(255,255,255,0.1);
             color:#fff;
-            font-size:14px;
-            font-weight:500;
-            letter-spacing:0.5px;
+            font-size:10px;           /* نفس حجم النص */
+            font-weight: 900;
+            letter-spacing: -0.1px;
             transition: all 0.3s ease;
             box-sizing: border-box;
             direction: rtl;
             text-align: right;
-            height: 30px;
+            line-height: 1.5;
+            font-family: 'Cairo', sans-serif;
+            -webkit-font-smoothing: antialiased;
             resize: none;
-            line-height: 1.4;
             overflow: hidden;
-            -webkit-appearance: none;
-            appearance: none;
-        }
-
-        /* استثناء لحقل "رقم الثوب" */
-        input[name="form_number"] {
-            font-size: 14px;
-            letter-spacing: normal;
-            padding: 2px 8px;
-            line-height: 1.6;
-        }
-
-        /* استثناء لباقي الحقول الطويلة */
-        input[name="biceps_circumference"],
-        textarea[name="details"] {
-            font-size: 12px;
-            letter-spacing: normal;
+            height: 55px;
+            min-height: 55px;
+            max-height: 55px;
         }
 
         /* تأثير focus الموحد */
         .form-grid input:focus,
         .form-grid textarea:focus,
-        .sizes-grid input:focus {
+        .sizes-grid input:focus,
+        .sizes-grid textarea:focus {
             background: rgba(255, 255, 255, 0.2);
             transform: scale(1.05);
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
             outline: none;
-            height: 30px;
         }
 
         /* إخفاء أزرار السبين للأرقام */
@@ -110,119 +144,46 @@
         }
         input[type=number] { -moz-appearance: textfield; }
 
-        /* الصورة */
-        .model-preview{
-            display:block;
-            margin:0 auto 4px auto;
-            border-radius:12px;
-            border:1px solid rgba(255,255,255,0.3);
-            cursor: pointer;
-            max-width:100%;
-            height:auto;
-            transform-origin: bottom center;
-            -webkit-user-select: none;
-            user-select: none;
-            pointer-events: none;
-            transition: transform 0.1s ease;
-        }
-        
-        /* تنسيقات شريط التكبير */
-        .zoom-control {
-            margin: 2px 0 14px 0;
-            text-align: center;
-            direction: rtl;
-            min-height: 22px;
-        }
-        .zoom-label {
-            display: block;
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 3px;
-            color: #fff;
-        }
-
-        input[type=range] {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 100%;
-            height: 5px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 10px;
-            outline: none;
-            direction: ltr;
-        }
-
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 24px;
-            height: 24px;
-            background: #fff;
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 0 0 8px rgba(255,255,255,0.5);
-            transition: all 0.2s ease;
-            border: none;
-        }
-
-        input[type=range]::-webkit-slider-thumb:hover {
-            background: #28a745;
-            transform: scale(1.15);
-            box-shadow: 0 0 15px rgba(40, 167, 69, 0.5);
-        }
-
-        input[type=range]::-webkit-slider-thumb:active {
-            background: #1e7e34;
-            transform: scale(1.1);
-            box-shadow: 0 0 20px rgba(255,255,255,0.8);
-        }
-
-        input[type=range]::-moz-range-thumb {
-            width: 24px;
-            height: 24px;
-            background: #fff;
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 0 0 8px rgba(255,255,255,0.5);
-            transition: all 0.2s ease;
-            border: none;
-        }
-
-        input[type=range]::-moz-range-thumb:hover {
-            background: #28a745;
-            transform: scale(1.15);
-            box-shadow: 0 0 15px rgba(40, 167, 69, 0.5);
-        }
-
+        /* عنوان كم مقاسك؟ */
         .sizes-title{ 
             margin-top: 8px;
-            margin-bottom: 1px; 
-            font-size:14px; 
-            font-weight:bold; 
+            margin-bottom: 6px; 
+            font-size:12px;        
+            font-weight: 900; 
             text-align:center; 
+            color: #fff;
+            letter-spacing: -0.2px;
+            font-family: 'Cairo', sans-serif;
         }
         
         /* شبكة المقاسات */
         .sizes-grid{ 
             display:grid; 
             grid-template-columns: 1fr 1fr; 
-            gap: 6px 8px;
+            gap: 4px 5px;
             margin-top: 0px;
             margin-bottom: 6px;
+            direction: rtl;
+        }
+        /* الحقل الثالث (تفاصيل القياس) سيمتد على عمودين */
+        .full-width {
+            grid-column: span 2;
         }
 
-        .buttons{ display:flex; justify-content:space-between; margin-top: 2px; }
+        .buttons{ display:flex; justify-content:space-between; margin-top: 10px; }
         button{
-            width:48%; 
-            padding:6px 12px;
+            width:48%;
+            padding:6px 8px;
             border:none; 
-            border-radius:10px;
+            border-radius:8px;   
             cursor:pointer; 
-            font-size:15px;
-            font-weight:bold; 
+            font-size:14px;
+            font-weight: 900;     
             transition: all 0.3s ease;
             -webkit-appearance: none;
             appearance: none;
+            font-family: 'Cairo', sans-serif;
+            letter-spacing: -0.1px;
         }
         button:hover{ transform: scale(1.08); box-shadow:0 0 15px rgba(255,255,255,0.3); }
         .confirm{ background:#28a745; color:#fff; }
@@ -231,11 +192,17 @@
         /* تحسين للأيفون */
         @supports (-webkit-touch-callout: none) {
             .container {
-                width: 260px;
-                padding: 3px 20px 5px 20px;
+                width: 320px; /* تعديل للأيفون ليكون أقل بقليل */
+                padding: 3px 8px 5px 8px;
             }
             input, textarea, button {
-                font-size: 16px !important;
+                font-size: 11px !important;
+            }
+            textarea.large-detail {
+                font-size: 11px !important;
+            }
+            button {
+                font-size: 15px !important;
             }
         }
     </style>
@@ -244,47 +211,35 @@
     <div class="container">
         <h2>بيانات الطلب</h2>
         <form id="orderForm">
-            <!-- شبكة الحقول الأساسية (8 حقول) -->
+            <!-- شبكة الحقول الأساسية مع الترتيب الجديد -->
             <div class="form-grid">
-                <!-- العمود الأيمن -->
-                <input type="text" name="country" placeholder="الدولة" required>
+                <!-- العمود الأيمن (يظهر أولاً) -->
                 <input type="text" name="name" placeholder="الاسم" required>
-
-                <!-- الأرقام فقط (عربية وإنجليزية) -->
-                <input type="text" name="quantity" placeholder="كم ثوب تريد ؟" required inputmode="numeric" class="only-numbers">
-                <input type="text" name="governorate" placeholder="المحافظة" required>
-
-                <!-- الأرقام فقط (عربية وإنجليزية) -->
-                <input type="text" name="phone" placeholder="رقم هاتف آخر" required inputmode="numeric" class="only-numbers">
-                <textarea name="details" placeholder="تفاصيل العنوان"></textarea>
-
-                <!-- الأرقام فقط (عربية وإنجليزية) -->
-                <input type="text" name="form_number" placeholder="رقم الثوب" required inputmode="numeric" class="only-numbers">
+                <input type="tel" name="phone" placeholder="رقم هاتف آخر" required inputmode="numeric" pattern="\d*">
+                <input type="tel" name="alternate_phone" placeholder="رقم الهاتف" inputmode="numeric" pattern="\d*">
                 
-                <!-- الأرقام فقط (عربية وإنجليزية) -->
-                <input type="text" name="alternate_phone" placeholder="رقم الهاتف" inputmode="numeric" class="only-numbers">
+                <!-- العمود الأيسر (يظهر ثانياً) -->
+                <input type="tel" name="quantity" placeholder="كم ثوب تريد؟" required inputmode="numeric" pattern="\d*">
+                <input type="text" name="governorate" placeholder="المحافظة" required>
+                <input type="tel" name="form_number" placeholder="رقم الثوب الذي تريدة؟" required inputmode="numeric" pattern="\d*">
+                
+                <!-- تفاصيل العنوان (مكبرة قليلاً) - تمتد على عمودين -->
+                <textarea name="details" placeholder="تفاصيل اخري للعنوان" class="full-width large-detail" style="grid-column: span 2;"></textarea>
             </div>
 
-            <div class="sizes-title">(سم) طريقة القياس</div>
-            <img src="WhatsApp Image 2026-03-04 at 12.46.55 PM.jpeg" class="model-preview" id="measureImage" alt="طريقة القياس">
+            <!-- عنوان كم مقاسك؟ -->
+            <div class="sizes-title">كم مقاسك ؟</div>
 
-            <!-- عنصر التحكم بالتكبير -->
-            <div class="zoom-control">
-                <span class="zoom-label" id="zoomLabel">تكبير الصور 🔍</span>
-                <input type="range" id="zoomSlider" min="1" max="1.7" step="0.01" value="1">
-            </div>
-
-            <!-- شبكة المقاسات (6 حقول) - جميعها أرقام فقط (عربية وإنجليزية) -->
+            <!-- شبكة القياسات مع الترتيب الجديد -->
             <div class="sizes-grid">
-                <!-- العمود الأيمن -->
-                <input type="text" name="shoulder_width" placeholder="عرض الكتف" inputmode="numeric" class="only-numbers">
-                <input type="text" name="length_cm" placeholder="الطول" inputmode="numeric" class="only-numbers">
-
-                <input type="text" name="neck_circumference" placeholder="محيط الرقبة" inputmode="numeric" class="only-numbers">
-                <input type="text" name="arm_length" placeholder="طول الذراع" inputmode="numeric" class="only-numbers">
-
-                <input type="text" name="biceps_circumference" placeholder="محيط البايسبس" inputmode="numeric" class="only-numbers">
-                <input type="text" name="width" placeholder="العرض" inputmode="numeric" class="only-numbers">
+                <!-- العمود الأيمن (الطول) -->
+                <input type="tel" name="length_cm" placeholder="الطول" inputmode="numeric" pattern="\d*">
+                
+                <!-- العمود الأيسر (الوزن) -->
+                <input type="tel" name="width" placeholder="الوزن" inputmode="numeric" pattern="\d*">
+                
+                <!-- تفاصيل القياس (مكبرة قليلاً) - تمتد على عمودين -->
+                <textarea name="extra_measure_details" placeholder="تفاصيل اخري بالنسبة للقياس.. كرش بايسبس الخ...." class="full-width large-detail" style="grid-column: span 2;"></textarea>
             </div>
 
             <input type="hidden" name="model_image" value="diagram-clean.png">
@@ -298,97 +253,22 @@
 
     <script>
         (function() {
-            const img = document.getElementById("measureImage");
-            const zoomSlider = document.getElementById("zoomSlider");
-            const zoomLabel = document.getElementById("zoomLabel");
-
-            if (!img || !zoomSlider || !zoomLabel) return;
-
-            // تحديث تكبير الصورة عند تغيير الشريط
-            zoomSlider.addEventListener("input", function() {
-                const zoomValue = this.value;
-                img.style.transform = `scale(${zoomValue})`;
-                img.style.webkitTransform = `scale(${zoomValue})`;
-                
-                // التمرير للأعلى عند أقصى تكبير
-                if (zoomValue >= 1.69) {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }
-            });
-
-            // إظهار/إخفاء النص عند بدء/انتهاء التفاعل
-            zoomSlider.addEventListener("touchstart", function() {
-                zoomLabel.classList.add('hidden');
-            });
-
-            zoomSlider.addEventListener("touchend", function() {
-                zoomLabel.classList.remove('hidden');
-            });
-
-            zoomSlider.addEventListener("mousedown", function() {
-                zoomLabel.classList.add('hidden');
-            });
-
-            zoomSlider.addEventListener("mouseup", function() {
-                zoomLabel.classList.add('hidden');
-                setTimeout(() => {
-                    zoomLabel.classList.remove('hidden');
-                }, 100);
-            });
-
-            // دالة لتحويل الأرقام العربية إلى إنجليزية
-            function convertArabicNumbersToEnglish(str) {
-                const arabicNumbers = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
-                const englishNumbers = ['0','1','2','3','4','5','6','7','8','9'];
-                let result = '';
-                for (let i = 0; i < str.length; i++) {
-                    const char = str[i];
-                    const index = arabicNumbers.indexOf(char);
-                    if (index !== -1) {
-                        result += englishNumbers[index];
-                    } else {
-                        result += char;
-                    }
-                }
-                return result;
-            }
-
-            // اختيار جميع الحقول التي تطلب أرقاماً فقط
-            var numberInputs = document.querySelectorAll('.only-numbers');
-            
-            // إضافة مستمع حدث input لكل حقل
-            for (var i = 0; i < numberInputs.length; i++) {
-                numberInputs[i].addEventListener('input', function(e) {
-                    // تحويل الأرقام العربية إلى إنجليزية ثم السماح فقط بالأرقام
-                    let converted = convertArabicNumbersToEnglish(this.value);
-                    // السماح فقط بالأرقام 0-9
-                    converted = converted.replace(/[^0-9]/g, '');
-                    if (this.value !== converted) {
-                        this.value = converted;
-                    }
-                });
-            }
-
-            // معالجة تقديم النموذج
+            // معالجة تقديم النموذج مع الحقول المتبقية فقط
             document.getElementById("orderForm").addEventListener("submit", function(event) {
                 event.preventDefault();
 
                 const formData = new FormData(this);
                 let body = "تفاصيل الطلب:\n\n" +
-                    "الاسم: " + formData.get("name") + "\n" +
-                    "الدولة: " + formData.get("country") + "\n" +
-                    "المحافظة: " + formData.get("governorate") + "\n" +
-                    "كم ثوب: " + formData.get("quantity") + "\n" +
-                    "تفاصيل العنوان: " + formData.get("details") + "\n" +
-                    "رقم هاتف آخر: " + formData.get("phone") + "\n" +
-                    "رقم الهاتف: " + formData.get("alternate_phone") + "\n" +
-                    "رقم الثوب: " + formData.get("form_number") + "\n" +
-                    "عرض الكتف: " + formData.get("shoulder_width") + "\n" +
-                    "محيط الرقبة: " + formData.get("neck_circumference") + "\n" +
-                    "محيط البايسبس: " + formData.get("biceps_circumference") + "\n" +
-                    "الطول: " + formData.get("length_cm") + "\n" +
-                    "طول الذراع: " + formData.get("arm_length") + "\n" +
-                    "العرض: " + formData.get("width");
+                    "الاسم: " + (formData.get("name") || "") + "\n" +
+                    "رقم هاتف آخر: " + (formData.get("phone") || "") + "\n" +
+                    "رقم الهاتف: " + (formData.get("alternate_phone") || "") + "\n" +
+                    "كم ثوب تريد؟: " + (formData.get("quantity") || "") + "\n" +
+                    "المحافظة: " + (formData.get("governorate") || "") + "\n" +
+                    "رقم الثوب الذي تريدة؟: " + (formData.get("form_number") || "") + "\n" +
+                    "تفاصيل اخري للعنوان: " + (formData.get("details") || "") + "\n" +
+                    "الطول: " + (formData.get("length_cm") || "") + "\n" +
+                    "الوزن: " + (formData.get("width") || "") + "\n" +
+                    "تفاصيل اخري للقياس (كرش، بايسبس...): " + (formData.get("extra_measure_details") || "");
 
                 let encodedMessage = encodeURIComponent(body);
                 let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 

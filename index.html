@@ -7,15 +7,19 @@
     <!-- وصف الموقع الذي يظهر في نتائج البحث (قابل للتعديل) -->
     <meta name="description" content="الانصاري للثوب العربي و جميع مشتملاتة تحت ادارة عصام بطران الانصاري" />
     <!-- أيقونة الموقع (اللوجو الذي يظهر في تبويب المتصفح) -->
-    <link rel="icon" href="لوجو الانصاري مربع شفاف.png" type="image/x-icon" />  
+    <link rel="icon" href="لوجو الانصاري مربع شفاف.png" type="image/x-icon" />
+    <!-- استيراد خط Cairo بوزن 900 من Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@900&display=swap" rel="stylesheet">
     <style>  
       * {  
         margin: 0;  
         padding: 0;  
         box-sizing: border-box;  
         scroll-behavior: smooth;  
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;  
-        font-weight: 700;  
+        font-family: 'Cairo', sans-serif;  /* تغيير الخط إلى Cairo */
+        font-weight: 900;  /* وزن 900 */
       }  
       body {  
         background-color: #1A1A1A;  
@@ -63,7 +67,7 @@
         padding: 0.5rem 1.5rem;  
         text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);  
         white-space: nowrap;  
-        font-weight: 700;  
+        font-weight: 900;  /* تعديل الوزن */
         display: flex;  
         align-items: center;  
         gap: 0.5rem;  
@@ -110,6 +114,7 @@
         font-size: 2rem;  
         flex-wrap: wrap;  
         color: #ffffff;  
+        font-weight: 900;
       }  
 
       .works ul {  
@@ -161,6 +166,7 @@
         margin-bottom: 0.5rem;  
         width: 100%;  
         text-align: center;  
+        font-weight: 900;
       }  
 
       .product-description {  
@@ -171,6 +177,7 @@
         width: 100%;  
         word-wrap: break-word;  
         text-align: center;  
+        font-weight: 900;
       }  
 
       .buy-btn {  
@@ -184,7 +191,7 @@
         border: 1px solid rgba(255, 255, 255, 0.2);  
         color: #fff;  
         text-decoration: none;  
-        font-weight: bold;  
+        font-weight: 900;  /* تعديل الوزن */
         padding: 0.5rem 1.5rem;  
         font-size: 1rem;  
         border-radius: 30px;  
@@ -239,6 +246,7 @@
         z-index: 15;  
         user-select: none;  
         box-shadow: 0 2px 8px rgba(0,0,0,0.3);  
+        font-weight: 900;
       }  
 
       .product-zoom-btn:hover {  
@@ -303,6 +311,7 @@
         color: white;  
         transition: background-color 0.2s ease, transform 0.2s ease;  
         z-index: 2010;  
+        font-weight: 900;
       }  
       .modal-close:hover {  
         background-color: rgba(255, 255, 255, 0.3);  
@@ -328,9 +337,11 @@
         font-size: 2rem;  
         flex-wrap: wrap;  
         color: #ffffff;  
+        font-weight: 900;
       }  
       .contactTitle h1 {  
         font-size: 2.5rem;  
+        font-weight: 900;
       }  
       .contact {  
         display: flex;  
@@ -344,6 +355,7 @@
       .contact a {  
         color: #ffffff;  
         text-decoration: none;  
+        font-weight: 900;
       }  
       .emailAndPhone {  
         display: flex;  
@@ -387,6 +399,7 @@
         padding: 2rem;  
         text-align: center;  
         font-size: 1.2rem;  
+        font-weight: 900;
       }  
 
       /* إضافة مسافة علوية للعناصر المستهدفة بالروابط */  
