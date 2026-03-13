@@ -226,13 +226,14 @@
             <div class="form-grid">
                 <!-- العمود الأيمن (يظهر أولاً) -->
                 <input type="text" name="name" placeholder="الاسم" required>
-                <input type="tel" name="phone" placeholder="رقم هاتف آخر" required inputmode="numeric" pattern="\d*">
-                <input type="tel" name="alternate_phone" placeholder="رقم الهاتف" inputmode="numeric" pattern="\d*">
+                <!-- إزالة pattern مع الإبقاء على inputmode -->
+                <input type="tel" name="phone" placeholder="رقم هاتف آخر" required inputmode="numeric">
+                <input type="tel" name="alternate_phone" placeholder="رقم الهاتف" inputmode="numeric">
                 
                 <!-- العمود الأيسر (يظهر ثانياً) -->
-                <input type="tel" name="quantity" placeholder="كم ثوب تريد؟" required inputmode="numeric" pattern="\d*">
+                <input type="tel" name="quantity" placeholder="كم ثوب تريد؟" required inputmode="numeric">
                 <input type="text" name="governorate" placeholder="المحافظة" required>
-                <input type="tel" name="form_number" placeholder="رقم الثوب الذي تريدة؟" required inputmode="numeric" pattern="\d*">
+                <input type="tel" name="form_number" placeholder="رقم الثوب الذي تريدة؟" required inputmode="numeric">
                 
                 <!-- تفاصيل العنوان (مكبرة قليلاً) - تمتد على عمودين -->
                 <textarea name="details" placeholder="تفاصيل اخري للعنوان" class="full-width large-detail" style="grid-column: span 2;"></textarea>
@@ -244,13 +245,13 @@
             <!-- شبكة القياسات مع الترتيب الجديد -->
             <div class="sizes-grid">
                 <!-- العمود الأيمن (الطول) -->
-                <input type="tel" name="length_cm" placeholder="الطول" inputmode="numeric" pattern="\d*">
+                <input type="tel" name="length_cm" placeholder="الطول" inputmode="numeric">
                 
                 <!-- العمود الأيسر (الوزن) -->
-                <input type="tel" name="width" placeholder="الوزن" inputmode="numeric" pattern="\d*">
+                <input type="tel" name="width" placeholder="الوزن" inputmode="numeric">
                 
-                <!-- تفاصيل القياس (تم تعديل النص) -->
-                <textarea name="extra_measure_details" placeholder="تفاصيل اخري بالنسبة للمقاس .. بطن . بايسبس الخ...." class="full-width large-detail" style="grid-column: span 2;"></textarea>
+                <!-- تفاصيل القياس (تم تعديل النص: كرش -> البطن) -->
+                <textarea name="extra_measure_details" placeholder="تفاصيل اخري بالنسبة للمقاسات .. بطن بايسبس ...." class="full-width large-detail" style="grid-column: span 2;"></textarea>
             </div>
 
             <input type="hidden" name="model_image" value="diagram-clean.png">
@@ -279,7 +280,7 @@
                     "تفاصيل اخري للعنوان: " + (formData.get("details") || "") + "\n" +
                     "الطول: " + (formData.get("length_cm") || "") + "\n" +
                     "الوزن: " + (formData.get("width") || "") + "\n" +
-                    "تفاصيل اخري للمقاسات (كرش، بايسبس...): " + (formData.get("extra_measure_details") || "");
+                    "تفاصيل اخري للمقاسات (البطن، بايسبس...): " + (formData.get("extra_measure_details") || ""); // تعديل هنا
 
                 let encodedMessage = encodeURIComponent(body);
                 let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
